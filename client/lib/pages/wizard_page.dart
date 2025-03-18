@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fix_warehouse/greenthumb/service.dart';
+import 'package:flutter_fix_warehouse/views/app_navigation_bar.dart';
 import 'package:flutter_fix_warehouse/views/interrupt_choice_picker.dart';
 import 'package:flutter_fix_warehouse/views/interrupt_range_value_picker.dart';
+import 'package:flutter_fix_warehouse/views/sparkle_leaf.dart';
 import 'package:flutter_fix_warehouse/views/user_prompt_picker.dart';
 
 import '../views/interrupt_image_picker.dart';
@@ -31,34 +33,9 @@ class _WizardPageState extends State<WizardPage> {
           elevation: 0,
           leading: const BackButton(color: Colors.white),
           title: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                width: 32,
-                height: 32,
-                child: Stack(
-                  children: [
-                    Positioned(
-                      left: 4,
-                      top: 4,
-                      child: Icon(
-                        Icons.eco_outlined,
-                        color: Colors.white,
-                        size: 24,
-                      ),
-                    ),
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      child: Icon(
-                        Icons.auto_awesome,
-                        color: Colors.white,
-                        size: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              SparkleLeaf(size: 32, leafSize: 24, sparkleSize: 12),
               SizedBox(width: 8),
               Text(
                 'GreenThumb',
@@ -76,6 +53,7 @@ class _WizardPageState extends State<WizardPage> {
             currentMessage == null
                 ? const Center(child: CircularProgressIndicator())
                 : _buildStepView(currentMessage, true),
+        bottomNavigationBar: const AppNavigationBar(),
       );
     },
   );

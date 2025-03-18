@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../greenthumb/service.dart';
 import 'view_model.dart';
@@ -15,7 +16,7 @@ class UserPromptPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     children: [
-      const SizedBox(height: 32),
+      const Spacer(flex: 1),
       const Padding(
         padding: EdgeInsets.symmetric(horizontal: 24),
         child: Text(
@@ -27,7 +28,7 @@ class UserPromptPicker extends StatelessWidget {
           ),
         ),
       ),
-      const SizedBox(height: 32),
+      const Spacer(flex: 1),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Row(
@@ -38,7 +39,7 @@ class UserPromptPicker extends StatelessWidget {
                 width: 160,
                 height: 160,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE8F5E9),
+                  color: const Color(0xFFC8E6C9),
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Material(
@@ -61,10 +62,10 @@ class UserPromptPicker extends StatelessWidget {
                         Text(
                           action.buttonName,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 16,
+                          style: GoogleFonts.notoSans(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
                             color: Color(0xFF2E7D32),
-                            height: 1.2,
                           ),
                         ),
                       ],
@@ -75,33 +76,7 @@ class UserPromptPicker extends StatelessWidget {
           ],
         ),
       ),
-      const Spacer(),
-      BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.grey.shade600,
-        unselectedItemColor: Colors.grey.shade600,
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined),
-            label: 'Shop',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            label: 'Services',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.build_outlined),
-            label: 'DIY',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'Login',
-          ),
-        ],
-      ),
+      const Spacer(flex: 2),
     ],
   );
 }

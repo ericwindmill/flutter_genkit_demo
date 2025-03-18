@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fix_warehouse/pages/wizard_page.dart';
+import 'package:flutter_fix_warehouse/views/app_navigation_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../views/gt_button.dart';
+import '../views/sparkle_leaf.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -135,31 +137,10 @@ class HomePage extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              left: 2,
-                              top: 2,
-                              child: Icon(
-                                Icons.eco_outlined,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                            ),
-                            Positioned(
-                              top: 0,
-                              left: 0,
-                              child: Icon(
-                                Icons.auto_awesome,
-                                color: Colors.white,
-                                size: 10,
-                              ),
-                            ),
-                          ],
-                        ),
+                      const SparkleLeaf(
+                        size: 24,
+                        leafSize: 20,
+                        sparkleSize: 10,
                       ),
                       const SizedBox(width: 8),
                       Text(
@@ -178,35 +159,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        NavigationBar(
-          backgroundColor: Color(0xFFFDF6FD),
-          elevation: 8,
-          height: 64,
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.shopping_bag_outlined, size: 24),
-              selectedIcon: Icon(Icons.shopping_bag, size: 24),
-              label: 'Shop',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.settings_outlined),
-              selectedIcon: Icon(Icons.settings),
-              label: 'Services',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.build_outlined),
-              selectedIcon: Icon(Icons.build),
-              label: 'DIY',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.person_outline),
-              selectedIcon: Icon(Icons.person),
-              label: 'Login',
-            ),
-          ],
-          onDestinationSelected: (index) {},
-        ),
+        const AppNavigationBar(),
       ],
     ),
   );
