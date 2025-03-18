@@ -50,7 +50,11 @@ class _WizardPageState extends State<WizardPage> {
                     Positioned(
                       top: 0,
                       left: 0,
-                      child: Icon(Icons.star, color: Colors.white, size: 12),
+                      child: Icon(
+                        Icons.auto_awesome,
+                        color: Colors.white,
+                        size: 12,
+                      ),
                     ),
                   ],
                 ),

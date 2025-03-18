@@ -135,10 +135,31 @@ class HomePage extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
-                        Icons.eco_outlined,
-                        color: Colors.white,
-                        size: 20,
+                      const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              left: 2,
+                              top: 2,
+                              child: Icon(
+                                Icons.eco_outlined,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              child: Icon(
+                                Icons.auto_awesome,
+                                color: Colors.white,
+                                size: 10,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(width: 8),
                       Text(
