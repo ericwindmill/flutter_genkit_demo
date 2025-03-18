@@ -11,12 +11,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       backgroundColor: Color(0xff4CAF50),
-      toolbarHeight: 68,
-      title: Padding(
-        padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-        child: Column(
-          children: [
-            Row(
+      toolbarHeight: 64,
+      title: Row(
+        children: [
+          Expanded(
+            child: Row(
               children: [
                 Text(
                   'Fix-It Warehouse',
@@ -31,48 +30,47 @@ class HomePage extends StatelessWidget {
                           ..color = Colors.white,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Icon(Icons.search, color: Colors.white),
                 SizedBox(width: 16),
                 Icon(Icons.shopping_cart, color: Colors.white),
               ],
             ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.location_on, color: Colors.white, size: 20),
-                const SizedBox(width: 4),
-                Text(
-                  'Valley Stream - 10pm',
-                  style: GoogleFonts.notoSans(
+          ),
+        ],
+      ),
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(32),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+          child: Row(
+            children: [
+              const Icon(Icons.location_on, color: Colors.white, size: 20),
+              const SizedBox(width: 4),
+              Text(
+                'Valley Stream - 10pm',
+                style: GoogleFonts.notoSans(color: Colors.white, fontSize: 12),
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.local_shipping,
                     color: Colors.white,
-                    fontSize: 12,
+                    size: 20,
                   ),
-                ),
-                const Spacer(),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.local_shipping,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '11581',
-                        style: GoogleFonts.notoSans(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
+                  const SizedBox(width: 4),
+                  Text(
+                    '11581',
+                    style: GoogleFonts.notoSans(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     ),
@@ -134,14 +132,25 @@ class HomePage extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Text(
-                    'Try GreenThumb',
-                    style: GoogleFonts.inter(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.2,
-                      color: Colors.white,
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.eco_outlined,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Try GreenThumb',
+                        style: GoogleFonts.inter(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.2,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -149,7 +158,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
         NavigationBar(
-          // backgroundColor: Colors.white,
+          backgroundColor: Color(0xFFFDF6FD),
           elevation: 8,
           height: 64,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
