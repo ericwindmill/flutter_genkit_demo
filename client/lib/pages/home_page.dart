@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fix_warehouse/pages/wizard_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../views/gt_button.dart';
 
@@ -13,52 +14,70 @@ class HomePage extends StatelessWidget {
       toolbarHeight: 68,
       title: Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-        child: Row(
+        child: Column(
           children: [
-            const Icon(Icons.build_circle, size: 30, color: Colors.white),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.green[50],
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    prefixIcon: Icon(Icons.search, color: Colors.green),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 10),
+            Row(
+              children: [
+                Text(
+                  'Fix-It Warehouse',
+                  style: GoogleFonts.jua(
+                    // color: Colors.green,
+                    fontSize: 32,
+                    fontWeight: FontWeight.normal,
+                    letterSpacing: 0,
+                    foreground:
+                        Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1
+                          ..color = Colors.white,
                   ),
                 ),
-              ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.shopping_cart, color: Colors.white),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Container(
-            color: Colors.green,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: const Row(
-              children: [
-                Icon(Icons.location_on, color: Colors.white),
-                Text('Valley Stream', style: TextStyle(color: Colors.white)),
-                Text(' 10PM', style: TextStyle(color: Colors.white)),
                 Spacer(),
-                Icon(Icons.local_shipping, color: Colors.white),
-                Text('11581', style: TextStyle(color: Colors.white)),
+                Icon(Icons.search, color: Colors.white),
+                SizedBox(width: 16),
+                Icon(Icons.shopping_cart, color: Colors.white),
               ],
             ),
-          ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                const Icon(Icons.location_on, color: Colors.white, size: 20),
+                const SizedBox(width: 4),
+                const Text(
+                  'Valley Stream - 10pm',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    letterSpacing: 0.3,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.local_shipping,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '11581',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          letterSpacing: 0.3,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     ),
@@ -66,68 +85,102 @@ class HomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(16),
-          child: Wrap(
-            spacing: 8,
-            children: [
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Home',
-                        style: TextStyle(color: Colors.grey),
-                      ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    minimumSize: Size.zero,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                  child: const Text(
+                    'Home',
+                    style: TextStyle(
+                      color: Color(0xFF666666),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
                     ),
-                    const Text('/', style: TextStyle(color: Colors.grey)),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'DIY Projects & Ideas',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                    const Text('/', style: TextStyle(color: Colors.grey)),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Outdoor Living',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            'Garden Ideas & Projects',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: Image.asset('assets/blue-bird.jpg', fit: BoxFit.cover),
+                const Text(
+                  '/',
+                  style: TextStyle(
+                    color: Color(0xFF666666),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    minimumSize: Size.zero,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                  child: const Text(
+                    'DIY Projects & Ideas',
+                    style: TextStyle(
+                      color: Color(0xFF666666),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+                const Text('/', style: TextStyle(color: Colors.grey)),
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    minimumSize: Size.zero,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                  child: const Text(
+                    'Outdoor Living',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            'Garden Ideas & Projects',
+            style: GoogleFonts.inter(
+              fontSize: 32,
+              fontWeight: FontWeight.w700,
+              letterSpacing: -0.5,
+              height: 1.2,
+            ),
+          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
             child: Column(
               children: [
-                const Text('Looking for gardening help?'),
-                const SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Image.asset(
+                    'assets/woman-gardening.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Looking for gardening help?',
+                  style: GoogleFonts.inter(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: -0.3,
+                    height: 1.2,
+                  ),
+                ),
+                const SizedBox(height: 24),
                 GtButton(
-                  backgroundColor: const Color(0xFFF26722),
+                  backgroundColor: const Color(0xFF4A8B3B),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -136,46 +189,45 @@ class HomePage extends StatelessWidget {
                       ),
                     );
                   },
-                  child: const Text('Try GreenThumb'),
+                  child: Text(
+                    'Try GreenThumb',
+                    style: GoogleFonts.inter(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.2,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Suggested Categories',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'All Categories',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
         NavigationBar(
+          backgroundColor: Colors.white,
+          elevation: 8,
+          height: 64,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
           destinations: const [
             NavigationDestination(
-              icon: Icon(Icons.shopping_bag),
-              label: 'Shop All',
+              icon: Icon(Icons.shopping_bag_outlined, size: 24),
+              selectedIcon: Icon(Icons.shopping_bag, size: 24),
+              label: 'Shop',
             ),
             NavigationDestination(
-              icon: Icon(Icons.settings),
+              icon: Icon(Icons.settings_outlined),
+              selectedIcon: Icon(Icons.settings),
               label: 'Services',
             ),
-            NavigationDestination(icon: Icon(Icons.build), label: 'DIY'),
             NavigationDestination(
-              icon: Icon(Icons.account_circle),
-              label: 'Log In',
+              icon: Icon(Icons.build_outlined),
+              selectedIcon: Icon(Icons.build),
+              label: 'DIY',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.person_outline),
+              selectedIcon: Icon(Icons.person),
+              label: 'Login',
             ),
           ],
           onDestinationSelected: (index) {},
