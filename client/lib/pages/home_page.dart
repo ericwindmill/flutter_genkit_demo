@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      backgroundColor: Colors.green,
+      backgroundColor: Color(0xff4CAF50),
       toolbarHeight: 68,
       title: Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
@@ -21,7 +21,6 @@ class HomePage extends StatelessWidget {
                 Text(
                   'Fix-It Warehouse',
                   style: GoogleFonts.jua(
-                    // color: Colors.green,
                     fontSize: 32,
                     fontWeight: FontWeight.normal,
                     letterSpacing: 0,
@@ -84,71 +83,23 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    minimumSize: Size.zero,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                  ),
-                  child: const Text(
-                    'Home',
-                    style: TextStyle(
-                      color: Color(0xFF666666),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                const Text(
-                  '/',
-                  style: TextStyle(
-                    color: Color(0xFF666666),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    minimumSize: Size.zero,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                  ),
-                  child: const Text(
-                    'DIY Projects & Ideas',
-                    style: TextStyle(
-                      color: Color(0xFF666666),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                const Text('/', style: TextStyle(color: Colors.grey)),
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    minimumSize: Size.zero,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                  ),
-                  child: const Text(
-                    'Outdoor Living',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ),
-              ],
+            child: Text(
+              'Home / DIY Projects & Ideas / Outdoor Living',
+              style: GoogleFonts.notoSans(
+                color: Color(0xFF666666),
+                fontSize: 14,
+              ),
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+        const SizedBox(height: 16),
+        Center(
           child: Text(
             'Garden Ideas & Projects',
-            style: GoogleFonts.inter(
-              fontSize: 32,
-              fontWeight: FontWeight.w700,
-              letterSpacing: -0.5,
-              height: 1.2,
+            style: GoogleFonts.notoSans(
+              color: Colors.black,
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -167,16 +118,14 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   'Looking for gardening help?',
-                  style: GoogleFonts.inter(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: -0.3,
-                    height: 1.2,
+                  style: GoogleFonts.notoSans(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 24),
                 GtButton(
-                  backgroundColor: const Color(0xFF4A8B3B),
+                  backgroundColor: const Color(0xFF2E7D32),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -200,7 +149,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
         NavigationBar(
-          backgroundColor: Colors.white,
+          // backgroundColor: Colors.white,
           elevation: 8,
           height: 64,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
