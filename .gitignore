@@ -2,3 +2,6 @@ client/.flutter-plugins-dependencies
 .DS_Store
 .vscode/launch.json
 server/.genkit
+.vscode
+.dart_tool
+.idea
