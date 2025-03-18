@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fix_warehouse/pages/wizard_page.dart';
-import 'package:flutter_fix_warehouse/views/app_navigation_bar.dart';
+import 'package:flutter_fix_warehouse/widgets/app_navigation_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../views/gt_button.dart';
-import '../views/sparkle_leaf.dart';
+import '../widgets/gt_button.dart';
+import '../widgets/sparkle_leaf.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

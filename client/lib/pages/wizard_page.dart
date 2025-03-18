@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fix_warehouse/greenthumb/service.dart';
-import 'package:flutter_fix_warehouse/views/app_navigation_bar.dart';
 import 'package:flutter_fix_warehouse/views/interrupt_choice_picker.dart';
 import 'package:flutter_fix_warehouse/views/interrupt_range_value_picker.dart';
-import 'package:flutter_fix_warehouse/views/sparkle_leaf.dart';
 import 'package:flutter_fix_warehouse/views/user_prompt_picker.dart';
+import 'package:flutter_fix_warehouse/widgets/app_navigation_bar.dart';
+import 'package:flutter_fix_warehouse/widgets/sparkle_leaf.dart';
 
 import '../views/interrupt_image_picker.dart';
 import '../views/model_response_view.dart';
@@ -35,7 +35,7 @@ class _WizardPageState extends State<WizardPage> {
           title: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SparkleLeaf(size: 32, leafSize: 24, sparkleSize: 12),
+              SparkleLeaf(),
               SizedBox(width: 8),
               Text(
                 'GreenThumb',

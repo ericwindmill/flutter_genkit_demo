@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 import '../greenthumb/service.dart';
-import 'gt_button.dart';
+import '../widgets/gt_button.dart';
 import 'view_model.dart';
 
 class InterruptChoicePicker extends StatelessWidget {
