@@ -43,13 +43,11 @@ class HomePage extends StatelessWidget {
               children: [
                 const Icon(Icons.location_on, color: Colors.white, size: 20),
                 const SizedBox(width: 4),
-                const Text(
+                Text(
                   'Valley Stream - 10pm',
-                  style: TextStyle(
+                  style: GoogleFonts.notoSans(
                     color: Colors.white,
-                    fontSize: 16,
-                    letterSpacing: 0.3,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
                   ),
                 ),
                 const Spacer(),
@@ -65,11 +63,9 @@ class HomePage extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         '11581',
-                        style: TextStyle(
+                        style: GoogleFonts.notoSans(
                           color: Colors.white,
-                          fontSize: 16,
-                          letterSpacing: 0.3,
-                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
                         ),
                       ),
                     ],
