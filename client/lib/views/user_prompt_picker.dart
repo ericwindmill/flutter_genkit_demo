@@ -14,43 +14,92 @@ class UserPromptPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      const Text(
-        'What are you looking to do?',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      const SizedBox(height: 32),
+      const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        child: Text(
+          'What are you looking to do?',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
       ),
-      const SizedBox(height: 16),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          for (final action in GardeningAction.values)
-            SizedBox(
-              width: 160,
-              height: 160,
-              child: ElevatedButton(
-                onPressed:
-                    onRequest != null ? () => onRequest!(action.prompt) : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      selectedAction == action
-                          ? Colors.lightGreen
-                          : Colors.lightGreen.shade100,
-                  foregroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+      const SizedBox(height: 32),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            for (final action in GardeningAction.values)
+              Container(
+                width: 160,
+                height: 160,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE8F5E9),
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap:
+                        onRequest != null
+                            ? () => onRequest!(action.prompt)
+                            : null,
+                    borderRadius: BorderRadius.circular(24),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          action.icon,
+                          size: 28,
+                          color: const Color(0xFF2E7D32),
+                        ),
+                        const SizedBox(height: 12),
+                        Text(
+                          action.buttonName,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Color(0xFF2E7D32),
+                            height: 1.2,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(action.icon, size: 48),
-                    SizedBox(height: 8),
-                    Text(action.buttonName, textAlign: TextAlign.center),
-                  ],
-                ),
               ),
-            ),
+          ],
+        ),
+      ),
+      const Spacer(),
+      BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.grey.shade600,
+        unselectedItemColor: Colors.grey.shade600,
+        selectedFontSize: 12,
+        unselectedFontSize: 12,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag_outlined),
+            label: 'Shop',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            label: 'Services',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.build_outlined),
+            label: 'DIY',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: 'Login',
+          ),
         ],
       ),
     ],
@@ -60,12 +109,12 @@ class UserPromptPicker extends StatelessWidget {
 enum GardeningAction {
   expandGarden(
     buttonName: 'Expand my\ngarden',
-    icon: Icons.local_florist,
+    icon: Icons.local_florist_outlined,
     prompt: 'I\'d like to expand my garden.',
   ),
   keepGardenHealthy(
     buttonName: 'Keep my\ngarden healthy',
-    icon: Icons.water_drop,
+    icon: Icons.water_drop_outlined,
     prompt: 'I\'d like to keep my garden healthy.',
   );
 
