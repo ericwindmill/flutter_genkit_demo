@@ -230,5 +230,12 @@ const greenThumb = ai.defineFlow(
 
 
 startFlowServer({
+    port: 8080,
+    cors: {
+        "origin": "*",
+        "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+        "preflightContinue": false,
+        "optionsSuccessStatus": 204
+    },
   flows: [indexProducts, greenThumb],
 });
