@@ -73,15 +73,13 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
           alignment: const Alignment(0, -0.5),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: MarkdownBody(
-              data: widget.message.text,
-              styleSheet: MarkdownStyleSheet(
-                p: GoogleFonts.notoSans(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: WrapAlignment.center,
+            child: Text(
+              widget.message.text,
+              style: GoogleFonts.notoSans(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
         ),
