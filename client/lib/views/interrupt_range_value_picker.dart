@@ -47,63 +47,61 @@ class _InterruptRangeValuePickerState extends State<InterruptRangeValuePicker> {
   }
 
   @override
-  Widget build(BuildContext context) => Expanded(
-    child: Stack(
-      children: [
-        // Center the submit button vertically
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppLayout.extraLargePadding,
-            ),
-            child: GtButton(
-              style: GtButtonStyle.elevated,
-              onPressed:
-                  widget.onResume == null
-                      ? null
-                      : () {
-                        widget.onResume!(
-                          ref: widget.toolRef,
-                          name: widget.toolName,
-                          output: _currentValue.toString(),
-                        );
-                      },
-              child: const Text('Submit'),
-            ),
+  Widget build(BuildContext context) => Stack(
+    children: [
+      // Center the submit button vertically
+      Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppLayout.extraLargePadding,
+          ),
+          child: GtButton(
+            style: GtButtonStyle.elevated,
+            onPressed:
+                widget.onResume == null
+                    ? null
+                    : () {
+                      widget.onResume!(
+                        ref: widget.toolRef,
+                        name: widget.toolName,
+                        output: _currentValue.toString(),
+                      );
+                    },
+            child: const Text('Submit'),
           ),
         ),
-        // Position question and range controls between app bar and button
-        Align(
-          alignment: const Alignment(0, -0.5),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppLayout.extraLargePadding,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  widget.question,
-                  style: AppTextStyles.subheading,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: AppLayout.extraLargePadding),
-                Slider(
-                  value: _currentValue.toDouble(),
-                  min: widget.min.toDouble(),
-                  max: widget.max.toDouble(),
-                  divisions: min(widget.max - widget.min, 10),
-                  label: _currentValue.toString(),
-                  onChanged:
-                      (value) => setState(() => _currentValue = value.round()),
-                  activeColor: AppColors.primary,
-                ),
-                Text(_currentValue.toString(), style: AppTextStyles.value),
-              ],
-            ),
+      ),
+      // Position question and range controls between app bar and button
+      Align(
+        alignment: const Alignment(0, -0.5),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppLayout.extraLargePadding,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.question,
+                style: AppTextStyles.subheading,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: AppLayout.extraLargePadding),
+              Slider(
+                value: _currentValue.toDouble(),
+                min: widget.min.toDouble(),
+                max: widget.max.toDouble(),
+                divisions: min(widget.max - widget.min, 10),
+                label: _currentValue.toString(),
+                onChanged:
+                    (value) => setState(() => _currentValue = value.round()),
+                activeColor: AppColors.primary,
+              ),
+              Text(_currentValue.toString(), style: AppTextStyles.value),
+            ],
           ),
         ),
-      ],
-    ),
+      ),
+    ],
   );
 }

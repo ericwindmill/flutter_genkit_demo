@@ -12,14 +12,23 @@ import '../widgets/app_navigation_bar.dart';
 import '../widgets/sparkle_leaf.dart';
 
 class WizardPage extends StatefulWidget {
-  const WizardPage({super.key});
+  const WizardPage({super.key, required this.identityToken});
+
+  final String identityToken;
 
   @override
   State<WizardPage> createState() => _WizardPageState();
 }
 
 class _WizardPageState extends State<WizardPage> {
-  final _service = GreenthumbService();
+  @override
+  void initState() {
+    print(widget.identityToken);
+    _service = GreenthumbService(widget.identityToken);
+    super.initState();
+  }
+
+  late final GreenthumbService _service;
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(

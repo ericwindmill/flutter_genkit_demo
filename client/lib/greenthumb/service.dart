@@ -16,10 +16,17 @@ typedef ToolResumeCallback =
     });
 
 class GreenthumbService extends ChangeNotifier {
-  final host = 'flutter-genkit-demo-273031276541.us-central1.run.app';
+  GreenthumbService(this.identityToken);
+
+  final String identityToken;
+
+  final host = 'server-273031276541.us-central1.run.app';
   final port = 443;
-  late final url = Uri.parse('https://$host:$port/greenThumb');
-  late final headers = {'Content-Type': 'application/json'};
+  late final url = Uri.parse('https://$host/greenThumb');
+  late final headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $identityToken',
+  };
 
   // Local development
   // late final host = PlatformUtil.isAndroidEmulator ? '10.0.2.2' : '127.0.0.1';

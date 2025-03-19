@@ -40,76 +40,74 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
   }
 
   @override
-  Widget build(BuildContext context) => Expanded(
-    child: Stack(
-      children: [
-        // Keep the Take picture button centered vertically
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppLayout.extraLargePadding,
-            ),
-            child: GtButton(
-              style:
-                  _currentImageBytes == null
-                      ? GtButtonStyle.elevated
-                      : GtButtonStyle.outlined,
-              onPressed:
-                  _isCompressing || widget.onResume == null
-                      ? null
-                      : () => _getPicture(context),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.camera_alt),
-                  SizedBox(width: AppLayout.defaultPadding),
-                  const Text('Take picture'),
-                ],
-              ),
+  Widget build(BuildContext context) => Stack(
+    children: [
+      // Keep the Take picture button centered vertically
+      Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppLayout.extraLargePadding,
+          ),
+          child: GtButton(
+            style:
+                _currentImageBytes == null
+                    ? GtButtonStyle.elevated
+                    : GtButtonStyle.outlined,
+            onPressed:
+                _isCompressing || widget.onResume == null
+                    ? null
+                    : () => _getPicture(context),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.camera_alt),
+                SizedBox(width: AppLayout.defaultPadding),
+                const Text('Take picture'),
+              ],
             ),
           ),
         ),
-        // Position text block centered between app bar and button
-        Align(
-          alignment: const Alignment(0, -0.5),
+      ),
+      // Position text block centered between app bar and button
+      Align(
+        alignment: const Alignment(0, -0.5),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppLayout.extraLargePadding,
+          ),
+          child: Text(
+            widget.message.text,
+            style: AppTextStyles.subheading,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+      // Position image and submit button at bottom
+      if (_currentImageBytes != null)
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppLayout.extraLargePadding,
-            ),
-            child: Text(
-              widget.message.text,
-              style: AppTextStyles.subheading,
-              textAlign: TextAlign.center,
+            padding: const EdgeInsets.all(AppLayout.extraLargePadding),
+            child: Column(
+              children: [
+                Image.memory(
+                  _currentImageBytes!,
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(height: AppLayout.defaultPadding),
+                GtButton(
+                  style: GtButtonStyle.elevated,
+                  onPressed: widget.onResume == null ? null : _submit,
+                  child: const Text('Submit'),
+                ),
+              ],
             ),
           ),
         ),
-        // Position image and submit button at bottom
-        if (_currentImageBytes != null)
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(AppLayout.extraLargePadding),
-              child: Column(
-                children: [
-                  Image.memory(
-                    _currentImageBytes!,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                  SizedBox(height: AppLayout.defaultPadding),
-                  GtButton(
-                    style: GtButtonStyle.elevated,
-                    onPressed: widget.onResume == null ? null : _submit,
-                    child: const Text('Submit'),
-                  ),
-                ],
-              ),
-            ),
-          ),
-      ],
-    ),
+    ],
   );
 
   void _getPicture(BuildContext context) async {
