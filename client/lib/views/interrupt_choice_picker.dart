@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 import '../greenthumb/service.dart';
-import 'gt_button.dart';
+import '../styles.dart';
+import '../widgets/gt_button.dart';
 import 'view_model.dart';
 
 class InterruptChoicePicker extends StatelessWidget {
@@ -21,50 +21,57 @@ class InterruptChoicePicker extends StatelessWidget {
   final String? selectedValue;
   final String? toolRef;
   final String toolName;
+
   final ToolResumeCallback? onResume;
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(32),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        MarkdownBody(
-          data: question,
-          styleSheet: MarkdownStyleSheet(
-            p: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.4),
-          ),
+  Widget build(BuildContext context) => Expanded(
+    child: Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppLayout.extraLargePadding,
         ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.only(left: 40.0),
-          child: Center(
-            child: Column(
-              children: [
-                for (final choice in choices)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: SizedBox(
-                      width: 300,
-                      child: GtButton(
-                        onPressed:
-                            selectedValue == null && onResume != null
-                                ? () => onResume!(
-                                  ref: toolRef,
-                                  name: toolName,
-                                  output: choice,
-                                )
-                                : null,
-
-                        child: Text(choice, textAlign: TextAlign.center),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              question,
+              style: AppTextStyles.subheading,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: AppLayout.defaultPadding),
+            Center(
+              child: Column(
+                children: [
+                  for (final choice in choices)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: SizedBox(
+                        width: 300,
+                        child: GtButton(
+                          style:
+                              choice == selectedValue
+                                  ? GtButtonStyle.elevated
+                                  : GtButtonStyle.outlined,
+                          onPressed:
+                              selectedValue == null && onResume != null
+                                  ? () => onResume!(
+                                    ref: toolRef,
+                                    name: toolName,
+                                    output: choice,
+                                  )
+                                  : null,
+                          child: Text(choice, textAlign: TextAlign.center),
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     ),
   );
 }

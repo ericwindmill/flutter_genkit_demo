@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 class PlatformUtil {
   static bool? _isIosSimulator;
   static bool? _isAndroidEmulator;
+  static bool _isImagePickerActive = false;
 
   static final isDesktop = switch (defaultTargetPlatform) {
     TargetPlatform.macOS ||
@@ -54,8 +55,16 @@ class PlatformUtil {
   // If the user is running on desktop or a virtual device, use the gallery;
   // otherwise, use the camera. This assumes that mobile physical devices have
   // cameras and that desktop and virtual devices do not.
-  static Future<XFile?> getPicture(BuildContext context) =>
-      PlatformUtil.isDesktop || PlatformUtil.isVirtualDevice
-          ? ImagePicker().pickImage(source: ImageSource.gallery)
-          : showStillCameraDialog(context);
+  static Future<XFile?> getPicture(BuildContext context) async {
+    if (_isImagePickerActive) return null;
+
+    try {
+      _isImagePickerActive = true;
+      return PlatformUtil.isDesktop || PlatformUtil.isVirtualDevice
+          ? await ImagePicker().pickImage(source: ImageSource.gallery)
+          : await showStillCameraDialog(context);
+    } finally {
+      _isImagePickerActive = false;
+    }
+  }
 }

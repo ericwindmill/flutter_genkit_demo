@@ -7,7 +7,7 @@ import 'package:image/image.dart' as img;
 
 import '../greenthumb/service.dart';
 import '../platform_util.dart';
-import 'gt_button.dart';
+import '../widgets/gt_button.dart';
 import 'view_model.dart';
 
 class ToolImagePicker extends StatefulWidget {

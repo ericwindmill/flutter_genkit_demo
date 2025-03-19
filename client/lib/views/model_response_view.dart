@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
+import '../styles.dart';
 import 'view_model.dart';
 
 class ModelResponseView extends StatelessWidget {
@@ -10,23 +11,25 @@ class ModelResponseView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(32),
+    padding: const EdgeInsets.all(AppLayout.extraLargePadding),
     child: SingleChildScrollView(
-      child: MarkdownBody(
-        data: message.text,
-        styleSheet: MarkdownStyleSheet(
-          p: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.4),
+      child: Center(
+        child: MarkdownBody(
+          data: message.text,
+          styleSheet: MarkdownStyleSheet(
+            p: AppTextStyles.body.copyWith(fontWeight: FontWeight.normal),
+          ),
+          imageBuilder: (uri, title, alt) {
+            final image = uri.toString();
+            return Image.asset(
+              'assets/product-images/$image',
+              errorBuilder: (context, error, stackTrace) {
+                debugPrint('Error loading image: $error');
+                return SizedBox.shrink();
+              },
+            );
+          },
         ),
-        imageBuilder: (uri, title, alt) {
-          final image = uri.toString();
-          return Image.asset(
-            'assets/product-images/$image',
-            errorBuilder: (context, error, stackTrace) {
-              debugPrint('Error loading image: $error');
-              return SizedBox.shrink();
-            },
-          );
-        },
       ),
     ),
   );

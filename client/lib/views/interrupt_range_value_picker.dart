@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 import '../greenthumb/service.dart';
-import 'gt_button.dart';
+import '../styles.dart';
+import '../widgets/gt_button.dart';
 import 'view_model.dart';
 
 class InterruptRangeValuePicker extends StatefulWidget {
@@ -27,6 +27,7 @@ class InterruptRangeValuePicker extends StatefulWidget {
   final int? selectedValue;
   final String? toolRef;
   final String toolName;
+
   final ToolResumeCallback? onResume;
 
   @override
@@ -46,23 +47,47 @@ class _InterruptRangeValuePickerState extends State<InterruptRangeValuePicker> {
   }
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(32),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+  Widget build(BuildContext context) => Expanded(
+    child: Stack(
       children: [
-        MarkdownBody(
-          data: widget.question,
-          styleSheet: MarkdownStyleSheet(
-            p: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.4),
+        // Center the submit button vertically
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppLayout.extraLargePadding,
+            ),
+            child: GtButton(
+              style: GtButtonStyle.elevated,
+              onPressed:
+                  widget.onResume == null
+                      ? null
+                      : () {
+                        widget.onResume!(
+                          ref: widget.toolRef,
+                          name: widget.toolName,
+                          output: _currentValue.toString(),
+                        );
+                      },
+              child: const Text('Submit'),
+            ),
           ),
         ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.only(left: 40.0),
-          child: Center(
+        // Position question and range controls between app bar and button
+        Align(
+          alignment: const Alignment(0, -0.5),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppLayout.extraLargePadding,
+            ),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
+                Text(
+                  widget.question,
+                  style: AppTextStyles.subheading,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: AppLayout.extraLargePadding),
                 Slider(
                   value: _currentValue.toDouble(),
                   min: widget.min.toDouble(),
@@ -71,26 +96,9 @@ class _InterruptRangeValuePickerState extends State<InterruptRangeValuePicker> {
                   label: _currentValue.toString(),
                   onChanged:
                       (value) => setState(() => _currentValue = value.round()),
-                  activeColor: Colors.green,
+                  activeColor: AppColors.primary,
                 ),
-                Text(
-                  _currentValue.toString(),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 16),
-                GtButton(
-                  onPressed:
-                      widget.onResume == null
-                          ? null
-                          : () {
-                            widget.onResume!(
-                              ref: widget.toolRef,
-                              name: widget.toolName,
-                              output: _currentValue.toString(),
-                            );
-                          },
-                  child: const Text('Submit'),
-                ),
+                Text(_currentValue.toString(), style: AppTextStyles.value),
               ],
             ),
           ),

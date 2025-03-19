@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:image/image.dart' as img;
 
 import '../greenthumb/service.dart';
 import '../platform_util.dart';
-import 'gt_button.dart';
+import '../styles.dart';
+import '../widgets/gt_button.dart';
 import 'view_model.dart';
 
 class InterruptImagePicker extends StatefulWidget {
@@ -40,58 +40,74 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
   }
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(32),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+  Widget build(BuildContext context) => Expanded(
+    child: Stack(
       children: [
-        MarkdownBody(
-          data: widget.message.text,
-          styleSheet: MarkdownStyleSheet(
-            p: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.4),
-          ),
-        ),
-        const SizedBox(height: 16),
-        Expanded(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                if (_currentImageBytes != null)
-                  Expanded(
-                    child: Image.memory(
-                      _currentImageBytes!,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: OverflowBar(
-                    spacing: 16,
-                    children: [
-                      GtButton(
-                        onPressed:
-                            _isCompressing || widget.onResume == null
-                                ? null
-                                : () => _getPicture(context),
-                        child: const Text('Take Picture'),
-                      ),
-                      if (_currentImageBytes != null)
-                        GtButton(
-                          onPressed:
-                              _isCompressing || widget.onResume == null
-                                  ? null
-                                  : _submit,
-                          child: const Text('Submit'),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
+        // Keep the Take picture button centered vertically
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppLayout.extraLargePadding,
+            ),
+            child: GtButton(
+              style:
+                  _currentImageBytes == null
+                      ? GtButtonStyle.elevated
+                      : GtButtonStyle.outlined,
+              onPressed:
+                  _isCompressing || widget.onResume == null
+                      ? null
+                      : () => _getPicture(context),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.camera_alt),
+                  SizedBox(width: AppLayout.defaultPadding),
+                  const Text('Take picture'),
+                ],
+              ),
             ),
           ),
         ),
+        // Position text block centered between app bar and button
+        Align(
+          alignment: const Alignment(0, -0.5),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppLayout.extraLargePadding,
+            ),
+            child: Text(
+              widget.message.text,
+              style: AppTextStyles.subheading,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        // Position image and submit button at bottom
+        if (_currentImageBytes != null)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(AppLayout.extraLargePadding),
+              child: Column(
+                children: [
+                  Image.memory(
+                    _currentImageBytes!,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
+                  SizedBox(height: AppLayout.defaultPadding),
+                  GtButton(
+                    style: GtButtonStyle.elevated,
+                    onPressed: widget.onResume == null ? null : _submit,
+                    child: const Text('Submit'),
+                  ),
+                ],
+              ),
+            ),
+          ),
       ],
     ),
   );
@@ -124,8 +140,23 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
   }
 
   Future<Uint8List?> _resizeImageIfNeeded(Uint8List bytes) async {
+    debugPrint('Starting image resize operation with ${bytes.length} bytes');
+
     final originalImage = img.decodeImage(bytes);
-    if (originalImage == null) return null;
+    if (originalImage == null) {
+      debugPrint('Failed to decode image, returning null');
+      return null;
+    }
+
+    debugPrint(
+      'Original image dimensions: ${originalImage.width}x${originalImage.height}',
+    );
+
+    // Early bailout if image is already small enough
+    if (originalImage.width <= 400 && originalImage.height <= 400) {
+      debugPrint('Image already small enough, skipping resize');
+      return bytes;
+    }
 
     // resize image to max dimension of 400px while maintaining aspect ratio
     final resized = img.copyResize(
@@ -134,7 +165,12 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
       height: originalImage.height >= originalImage.width ? 400 : null,
     );
 
+    debugPrint('Resized image dimensions: ${resized.width}x${resized.height}');
+
     // encode as JPG with 85% quality and create data URL
-    return img.encodeJpg(resized, quality: 85);
+    final jpgBytes = img.encodeJpg(resized, quality: 85);
+    debugPrint('Compressed image size: ${jpgBytes.length} bytes');
+
+    return jpgBytes;
   }
 }
