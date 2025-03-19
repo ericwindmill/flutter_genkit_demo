@@ -41,6 +41,12 @@ class _WizardPageState extends State<WizardPage> {
               Text('GreenThumb', style: AppTextStyles.appBarTitle),
             ],
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.refresh, color: AppColors.white),
+              onPressed: _service.clear,
+            ),
+          ],
           centerTitle: true,
         ),
         body:
