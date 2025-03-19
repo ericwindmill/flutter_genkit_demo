@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../greenthumb/service.dart';
@@ -78,15 +77,13 @@ class _InterruptRangeValuePickerState extends State<InterruptRangeValuePicker> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                MarkdownBody(
-                  data: widget.question,
-                  styleSheet: MarkdownStyleSheet(
-                    p: GoogleFonts.notoSans(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: WrapAlignment.center,
+                Text(
+                  widget.question,
+                  style: GoogleFonts.notoSans(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
                 Slider(

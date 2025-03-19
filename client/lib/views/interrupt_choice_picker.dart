@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../greenthumb/service.dart';
 import '../widgets/gt_button.dart';
@@ -32,11 +32,13 @@ class InterruptChoicePicker extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            MarkdownBody(
-              data: question,
-              styleSheet: MarkdownStyleSheet(
-                p: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.4),
+            Text(
+              question,
+              style: GoogleFonts.notoSans(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             Center(
@@ -48,6 +50,10 @@ class InterruptChoicePicker extends StatelessWidget {
                       child: SizedBox(
                         width: 300,
                         child: GtButton(
+                          style:
+                              choice == selectedValue
+                                  ? GtButtonStyle.elevated
+                                  : GtButtonStyle.outlined,
                           onPressed:
                               selectedValue == null && onResume != null
                                   ? () => onResume!(
