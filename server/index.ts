@@ -198,12 +198,12 @@ You must follow these steps exactly:
     [put your overall recommendation here; be clear and concise].
 
     # [product 1]
-    From [manufacturer] for $[cost]
+    **$[cost]** - from [manufacturer]
 
     ![](image)
 
     # [product 2]
-    From [manufacturer] for $[cost]
+    **$[cost]** - from [manufacturer]
 
     ![](image)
 

@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../greenthumb/service.dart';
+import '../styles.dart';
 import 'view_model.dart';
 
 class UserPromptPicker extends StatelessWidget {
@@ -14,45 +15,64 @@ class UserPromptPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      const Text(
-        'What are you looking to do?',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      const Spacer(flex: 1),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppLayout.largePadding),
+        child: Text(
+          'What are you looking to do?',
+          style: AppTextStyles.subheading,
+        ),
       ),
-      const SizedBox(height: 16),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          for (final action in GardeningAction.values)
-            SizedBox(
-              width: 160,
-              height: 160,
-              child: ElevatedButton(
-                onPressed:
-                    onRequest != null ? () => onRequest!(action.prompt) : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      selectedAction == action
-                          ? Colors.lightGreen
-                          : Colors.lightGreen.shade100,
-                  foregroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+      const Spacer(flex: 1),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppLayout.largePadding),
+        child: Center(
+          child: Wrap(
+            spacing: AppLayout.extraLargePadding,
+            runSpacing: AppLayout.defaultPadding,
+            alignment: WrapAlignment.center,
+            children: [
+              for (final action in GardeningAction.values)
+                Container(
+                  width: 160,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryLight,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap:
+                          onRequest != null
+                              ? () => onRequest!(action.prompt)
+                              : null,
+                      borderRadius: BorderRadius.circular(24),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            action.icon,
+                            size: 28,
+                            color: AppColors.primaryDark,
+                          ),
+                          SizedBox(height: AppLayout.defaultPadding),
+                          Text(
+                            action.buttonName,
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.actionButton,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(action.icon, size: 48),
-                    SizedBox(height: 8),
-                    Text(action.buttonName, textAlign: TextAlign.center),
-                  ],
-                ),
-              ),
-            ),
-        ],
+            ],
+          ),
+        ),
       ),
+      const Spacer(flex: 2),
     ],
   );
 }
@@ -60,12 +80,12 @@ class UserPromptPicker extends StatelessWidget {
 enum GardeningAction {
   expandGarden(
     buttonName: 'Expand my\ngarden',
-    icon: Icons.local_florist,
+    icon: Icons.local_florist_outlined,
     prompt: 'I\'d like to expand my garden.',
   ),
   keepGardenHealthy(
     buttonName: 'Keep my\ngarden healthy',
-    icon: Icons.water_drop,
+    icon: Icons.water_drop_outlined,
     prompt: 'I\'d like to keep my garden healthy.',
   );
 

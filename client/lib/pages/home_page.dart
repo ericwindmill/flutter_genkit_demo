@@ -1,63 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fix_warehouse/pages/wizard_page.dart';
 
-import '../views/gt_button.dart';
+import '../styles.dart';
+import '../widgets/app_navigation_bar.dart';
+import '../widgets/gt_button.dart';
+import '../widgets/sparkle_leaf.dart';
+import 'wizard_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    backgroundColor: AppColors.appBackground,
     appBar: AppBar(
-      backgroundColor: Colors.green,
-      toolbarHeight: 68,
-      title: Padding(
-        padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
-        child: Row(
-          children: [
-            const Icon(Icons.build_circle, size: 30, color: Colors.white),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.green[50],
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    prefixIcon: Icon(Icons.search, color: Colors.green),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 10),
-                  ),
-                ),
-              ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.shopping_cart, color: Colors.white),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: Container(
-            color: Colors.green,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: const Row(
+      backgroundColor: AppColors.primary,
+      toolbarHeight: AppLayout.appBarHeight,
+      title: Row(
+        children: [
+          Expanded(
+            child: Row(
               children: [
-                Icon(Icons.location_on, color: Colors.white),
-                Text('Valley Stream', style: TextStyle(color: Colors.white)),
-                Text(' 10PM', style: TextStyle(color: Colors.white)),
-                Spacer(),
-                Icon(Icons.local_shipping, color: Colors.white),
-                Text('11581', style: TextStyle(color: Colors.white)),
+                Text('Fix-It Warehouse', style: AppTextStyles.title),
+                const Spacer(),
+                Icon(Icons.search, color: AppColors.appBackground),
+                SizedBox(width: AppLayout.defaultPadding),
+                Icon(Icons.shopping_cart, color: AppColors.appBackground),
               ],
             ),
+          ),
+        ],
+      ),
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(32),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: AppLayout.defaultPadding,
+            right: AppLayout.defaultPadding,
+            bottom: 8,
+          ),
+          child: Row(
+            children: [
+              Icon(
+                Icons.location_on,
+                color: AppColors.appBackground,
+                size: AppLayout.smallIconSize,
+              ),
+              SizedBox(width: 4),
+              Text('Valley Stream - 10pm', style: AppTextStyles.subtitle),
+              const Spacer(),
+              Row(
+                children: [
+                  Icon(
+                    Icons.local_shipping,
+                    color: AppColors.appBackground,
+                    size: AppLayout.smallIconSize,
+                  ),
+                  SizedBox(width: 4),
+                  Text('11581', style: AppTextStyles.subtitle),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -66,68 +68,44 @@ class HomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(16),
-          child: Wrap(
-            spacing: 8,
-            children: [
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Home',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                    const Text('/', style: TextStyle(color: Colors.grey)),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'DIY Projects & Ideas',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                    const Text('/', style: TextStyle(color: Colors.grey)),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Outdoor Living',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppLayout.defaultPadding,
+            vertical: 8,
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            'Garden Ideas & Projects',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Center(
-              child: Image.asset('assets/blue-bird.jpg', fit: BoxFit.cover),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Text(
+              'Home / DIY Projects & Ideas / Outdoor Living',
+              style: AppTextStyles.breadcrumb,
             ),
           ),
         ),
+        SizedBox(height: AppLayout.defaultPadding),
         Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
+          child: Text('Garden Ideas & Projects', style: AppTextStyles.heading),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
             child: Column(
               children: [
-                const Text('Looking for gardening help?'),
-                const SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: AppLayout.defaultPadding,
+                  ),
+                  child: Image.asset(
+                    'assets/woman-gardening.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(height: AppLayout.defaultPadding),
+                Text(
+                  'Looking for gardening help?',
+                  style: AppTextStyles.subheading,
+                ),
+                SizedBox(height: AppLayout.largePadding),
                 GtButton(
-                  backgroundColor: const Color(0xFFF26722),
+                  style: GtButtonStyle.elevated,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -136,50 +114,24 @@ class HomePage extends StatelessWidget {
                       ),
                     );
                   },
-                  child: const Text('Try GreenThumb'),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const SparkleLeaf(
+                        size: 24,
+                        leafSize: 20,
+                        sparkleSize: 10,
+                      ),
+                      SizedBox(width: 8),
+                      Text('Try GreenThumb', style: AppTextStyles.button),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Suggested Categories',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'All Categories',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        NavigationBar(
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.shopping_bag),
-              label: 'Shop All',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.settings),
-              label: 'Services',
-            ),
-            NavigationDestination(icon: Icon(Icons.build), label: 'DIY'),
-            NavigationDestination(
-              icon: Icon(Icons.account_circle),
-              label: 'Log In',
-            ),
-          ],
-          onDestinationSelected: (index) {},
-        ),
+        const AppNavigationBar(),
       ],
     ),
   );
