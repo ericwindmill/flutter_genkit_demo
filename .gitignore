@@ -5,3 +5,4 @@ server/.genkit
 .vscode
 .dart_tool
 .idea
+.firebase
