@@ -8,9 +8,9 @@ class AppColors {
   static const primaryLight = Color(0xFFC8E6C9);
   static const textPrimary = Colors.black;
   static const textSecondary = Color(0xFF666666);
-  static const white = Colors.white;
+  static const appBackground = Colors.white;
   static const grey = Colors.grey;
-  static const navigationBarBackground = Color(0xFFFDF6FD);
+  static const navigationBarBackground = AppColors.appBackground;
 }
 
 // Text Styles
@@ -23,17 +23,17 @@ class AppTextStyles {
         Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1
-          ..color = AppColors.white,
+          ..color = AppColors.appBackground,
   );
 
   static TextStyle get appBarTitle => GoogleFonts.notoSans(
-    color: AppColors.white,
+    color: AppColors.appBackground,
     fontSize: 20,
     fontWeight: FontWeight.w500,
   );
 
   static TextStyle get subtitle =>
-      GoogleFonts.notoSans(color: AppColors.white, fontSize: 12);
+      GoogleFonts.notoSans(color: AppColors.appBackground, fontSize: 12);
 
   static TextStyle get breadcrumb =>
       GoogleFonts.notoSans(color: AppColors.textSecondary, fontSize: 14);
@@ -51,7 +51,7 @@ class AppTextStyles {
     fontSize: 18,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.2,
-    color: AppColors.white,
+    color: AppColors.appBackground,
   );
 
   static TextStyle get body =>
@@ -79,7 +79,7 @@ class AppButtonStyles {
   static ButtonStyle get elevated => ElevatedButton.styleFrom(
     disabledBackgroundColor: AppColors.grey,
     backgroundColor: AppColors.primaryDark,
-    foregroundColor: AppColors.white,
+    foregroundColor: AppColors.appBackground,
     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
   );
 }

@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    backgroundColor: AppColors.appBackground,
     appBar: AppBar(
       backgroundColor: AppColors.primary,
       toolbarHeight: AppLayout.appBarHeight,
@@ -21,9 +22,9 @@ class HomePage extends StatelessWidget {
               children: [
                 Text('Fix-It Warehouse', style: AppTextStyles.title),
                 const Spacer(),
-                Icon(Icons.search, color: AppColors.white),
+                Icon(Icons.search, color: AppColors.appBackground),
                 SizedBox(width: AppLayout.defaultPadding),
-                Icon(Icons.shopping_cart, color: AppColors.white),
+                Icon(Icons.shopping_cart, color: AppColors.appBackground),
               ],
             ),
           ),
@@ -41,7 +42,7 @@ class HomePage extends StatelessWidget {
             children: [
               Icon(
                 Icons.location_on,
-                color: AppColors.white,
+                color: AppColors.appBackground,
                 size: AppLayout.smallIconSize,
               ),
               SizedBox(width: 4),
@@ -51,7 +52,7 @@ class HomePage extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.local_shipping,
-                    color: AppColors.white,
+                    color: AppColors.appBackground,
                     size: AppLayout.smallIconSize,
                   ),
                   SizedBox(width: 4),

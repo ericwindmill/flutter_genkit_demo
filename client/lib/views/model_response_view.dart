@@ -16,7 +16,9 @@ class ModelResponseView extends StatelessWidget {
       child: Center(
         child: MarkdownBody(
           data: message.text,
-          styleSheet: MarkdownStyleSheet(p: AppTextStyles.body),
+          styleSheet: MarkdownStyleSheet(
+            p: AppTextStyles.body.copyWith(fontWeight: FontWeight.normal),
+          ),
           imageBuilder: (uri, title, alt) {
             final image = uri.toString();
             return Image.asset(

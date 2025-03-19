@@ -11,7 +11,7 @@ class SparkleLeaf extends StatelessWidget {
   const SparkleLeaf({
     super.key,
     this.size = 32,
-    this.color = AppColors.white,
+    this.color = AppColors.appBackground,
     this.leafSize = 24,
     this.sparkleSize = 12,
   });

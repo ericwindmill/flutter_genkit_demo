@@ -29,10 +29,11 @@ class _WizardPageState extends State<WizardPage> {
       final currentMessage = messages.isEmpty ? null : messages.last;
 
       return Scaffold(
+        backgroundColor: AppColors.appBackground,
         appBar: AppBar(
           backgroundColor: AppColors.primary,
           elevation: 0,
-          leading: BackButton(color: AppColors.white),
+          leading: BackButton(color: AppColors.appBackground),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -43,7 +44,7 @@ class _WizardPageState extends State<WizardPage> {
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.refresh, color: AppColors.white),
+              icon: const Icon(Icons.refresh, color: AppColors.appBackground),
               onPressed: _service.clear,
             ),
           ],
