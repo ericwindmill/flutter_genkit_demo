@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../styles.dart';
 import 'view_model.dart';
 
 class ModelResponseView extends StatelessWidget {
@@ -11,14 +11,12 @@ class ModelResponseView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(32),
+    padding: const EdgeInsets.all(AppLayout.extraLargePadding),
     child: SingleChildScrollView(
       child: Center(
         child: MarkdownBody(
           data: message.text,
-          styleSheet: MarkdownStyleSheet(
-            p: GoogleFonts.notoSans(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
+          styleSheet: MarkdownStyleSheet(p: AppTextStyles.body),
           imageBuilder: (uri, title, alt) {
             final image = uri.toString();
             return Image.asset(

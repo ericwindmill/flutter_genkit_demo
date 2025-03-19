@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../greenthumb/service.dart';
+import '../styles.dart';
 import '../widgets/gt_button.dart';
 import 'view_model.dart';
 
@@ -21,26 +21,26 @@ class InterruptChoicePicker extends StatelessWidget {
   final String? selectedValue;
   final String? toolRef;
   final String toolName;
+
   final ToolResumeCallback? onResume;
 
   @override
   Widget build(BuildContext context) => Expanded(
     child: Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppLayout.extraLargePadding,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               question,
-              style: GoogleFonts.notoSans(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyles.subheading,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: AppLayout.defaultPadding),
             Center(
               child: Column(
                 children: [

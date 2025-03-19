@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../styles.dart';
+
 class SparkleLeaf extends StatelessWidget {
   final double size;
   final Color color;
@@ -9,7 +11,7 @@ class SparkleLeaf extends StatelessWidget {
   const SparkleLeaf({
     super.key,
     this.size = 32,
-    this.color = Colors.white,
+    this.color = AppColors.white,
     this.leafSize = 24,
     this.sparkleSize = 12,
   });

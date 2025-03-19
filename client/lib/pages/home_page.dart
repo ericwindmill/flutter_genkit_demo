@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fix_warehouse/pages/wizard_page.dart';
-import 'package:flutter_fix_warehouse/widgets/app_navigation_bar.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../styles.dart';
+import '../widgets/app_navigation_bar.dart';
 import '../widgets/gt_button.dart';
 import '../widgets/sparkle_leaf.dart';
+import 'wizard_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,30 +12,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      backgroundColor: Color(0xff4CAF50),
-      toolbarHeight: 64,
+      backgroundColor: AppColors.primary,
+      toolbarHeight: AppLayout.appBarHeight,
       title: Row(
         children: [
           Expanded(
             child: Row(
               children: [
-                Text(
-                  'Fix-It Warehouse',
-                  style: GoogleFonts.jua(
-                    fontSize: 32,
-                    fontWeight: FontWeight.normal,
-                    letterSpacing: 0,
-                    foreground:
-                        Paint()
-                          ..style = PaintingStyle.stroke
-                          ..strokeWidth = 1
-                          ..color = Colors.white,
-                  ),
-                ),
+                Text('Fix-It Warehouse', style: AppTextStyles.title),
                 const Spacer(),
-                Icon(Icons.search, color: Colors.white),
-                SizedBox(width: 16),
-                Icon(Icons.shopping_cart, color: Colors.white),
+                Icon(Icons.search, color: AppColors.white),
+                SizedBox(width: AppLayout.defaultPadding),
+                Icon(Icons.shopping_cart, color: AppColors.white),
               ],
             ),
           ),
@@ -44,31 +32,30 @@ class HomePage extends StatelessWidget {
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(32),
         child: Padding(
-          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+          padding: const EdgeInsets.only(
+            left: AppLayout.defaultPadding,
+            right: AppLayout.defaultPadding,
+            bottom: 8,
+          ),
           child: Row(
             children: [
-              const Icon(Icons.location_on, color: Colors.white, size: 20),
-              const SizedBox(width: 4),
-              Text(
-                'Valley Stream - 10pm',
-                style: GoogleFonts.notoSans(color: Colors.white, fontSize: 12),
+              Icon(
+                Icons.location_on,
+                color: AppColors.white,
+                size: AppLayout.smallIconSize,
               ),
+              SizedBox(width: 4),
+              Text('Valley Stream - 10pm', style: AppTextStyles.subtitle),
               const Spacer(),
               Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.local_shipping,
-                    color: Colors.white,
-                    size: 20,
+                    color: AppColors.white,
+                    size: AppLayout.smallIconSize,
                   ),
-                  const SizedBox(width: 4),
-                  Text(
-                    '11581',
-                    style: GoogleFonts.notoSans(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
-                  ),
+                  SizedBox(width: 4),
+                  Text('11581', style: AppTextStyles.subtitle),
                 ],
               ),
             ],
@@ -80,50 +67,42 @@ class HomePage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppLayout.defaultPadding,
+            vertical: 8,
+          ),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Text(
               'Home / DIY Projects & Ideas / Outdoor Living',
-              style: GoogleFonts.notoSans(
-                color: Color(0xFF666666),
-                fontSize: 14,
-              ),
+              style: AppTextStyles.breadcrumb,
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: AppLayout.defaultPadding),
         Center(
-          child: Text(
-            'Garden Ideas & Projects',
-            style: GoogleFonts.notoSans(
-              color: Colors.black,
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: Text('Garden Ideas & Projects', style: AppTextStyles.heading),
         ),
         Expanded(
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: AppLayout.defaultPadding,
+                  ),
                   child: Image.asset(
                     'assets/woman-gardening.png',
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: AppLayout.defaultPadding),
                 Text(
                   'Looking for gardening help?',
-                  style: GoogleFonts.notoSans(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: AppTextStyles.subheading,
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: AppLayout.largePadding),
                 GtButton(
                   style: GtButtonStyle.elevated,
                   onPressed: () {
@@ -142,16 +121,8 @@ class HomePage extends StatelessWidget {
                         leafSize: 20,
                         sparkleSize: 10,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Try GreenThumb',
-                        style: GoogleFonts.inter(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.2,
-                          color: Colors.white,
-                        ),
-                      ),
+                      SizedBox(width: 8),
+                      Text('Try GreenThumb', style: AppTextStyles.button),
                     ],
                   ),
                 ),

@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../greenthumb/service.dart';
+import '../styles.dart';
 import '../widgets/gt_button.dart';
 import 'view_model.dart';
 
@@ -27,6 +27,7 @@ class InterruptRangeValuePicker extends StatefulWidget {
   final int? selectedValue;
   final String? toolRef;
   final String toolName;
+
   final ToolResumeCallback? onResume;
 
   @override
@@ -52,7 +53,9 @@ class _InterruptRangeValuePickerState extends State<InterruptRangeValuePicker> {
         // Center the submit button vertically
         Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppLayout.extraLargePadding,
+            ),
             child: GtButton(
               style: GtButtonStyle.elevated,
               onPressed:
@@ -73,19 +76,18 @@ class _InterruptRangeValuePickerState extends State<InterruptRangeValuePicker> {
         Align(
           alignment: const Alignment(0, -0.5),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppLayout.extraLargePadding,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   widget.question,
-                  style: GoogleFonts.notoSans(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: AppTextStyles.subheading,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: AppLayout.extraLargePadding),
                 Slider(
                   value: _currentValue.toDouble(),
                   min: widget.min.toDouble(),
@@ -94,12 +96,9 @@ class _InterruptRangeValuePickerState extends State<InterruptRangeValuePicker> {
                   label: _currentValue.toString(),
                   onChanged:
                       (value) => setState(() => _currentValue = value.round()),
-                  activeColor: Colors.green,
+                  activeColor: AppColors.primary,
                 ),
-                Text(
-                  _currentValue.toString(),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
+                Text(_currentValue.toString(), style: AppTextStyles.value),
               ],
             ),
           ),

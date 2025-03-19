@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fix_warehouse/greenthumb/service.dart';
-import 'package:flutter_fix_warehouse/views/interrupt_choice_picker.dart';
-import 'package:flutter_fix_warehouse/views/interrupt_range_value_picker.dart';
-import 'package:flutter_fix_warehouse/views/user_prompt_picker.dart';
-import 'package:flutter_fix_warehouse/widgets/app_navigation_bar.dart';
-import 'package:flutter_fix_warehouse/widgets/sparkle_leaf.dart';
 
+import '../greenthumb/service.dart';
+import '../styles.dart';
+import '../views/interrupt_choice_picker.dart';
 import '../views/interrupt_image_picker.dart';
+import '../views/interrupt_range_value_picker.dart';
 import '../views/model_response_view.dart';
+import '../views/user_prompt_picker.dart';
 import '../views/view_model.dart';
+import '../widgets/app_navigation_bar.dart';
+import '../widgets/sparkle_leaf.dart';
 
 class WizardPage extends StatefulWidget {
   const WizardPage({super.key});
@@ -29,22 +30,15 @@ class _WizardPageState extends State<WizardPage> {
 
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF4CAF50),
+          backgroundColor: AppColors.primary,
           elevation: 0,
-          leading: const BackButton(color: Colors.white),
-          title: const Row(
+          leading: BackButton(color: AppColors.white),
+          title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SparkleLeaf(),
-              SizedBox(width: 8),
-              Text(
-                'GreenThumb',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              const SparkleLeaf(),
+              const SizedBox(width: 8),
+              Text('GreenThumb', style: AppTextStyles.appBarTitle),
             ],
           ),
           centerTitle: true,

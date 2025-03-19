@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image/image.dart' as img;
 
 import '../greenthumb/service.dart';
 import '../platform_util.dart';
+import '../styles.dart';
 import '../widgets/gt_button.dart';
 import 'view_model.dart';
 
@@ -46,7 +46,9 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
         // Keep the Take picture button centered vertically
         Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppLayout.extraLargePadding,
+            ),
             child: GtButton(
               style:
                   _currentImageBytes == null
@@ -60,7 +62,7 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(Icons.camera_alt),
-                  const SizedBox(width: 8),
+                  SizedBox(width: AppLayout.defaultPadding),
                   const Text('Take picture'),
                 ],
               ),
@@ -71,40 +73,35 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
         Align(
           alignment: const Alignment(0, -0.5),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppLayout.extraLargePadding,
+            ),
             child: Text(
               widget.message.text,
-              style: GoogleFonts.notoSans(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyles.subheading,
               textAlign: TextAlign.center,
             ),
           ),
         ),
         // Position image and submit button at bottom
         if (_currentImageBytes != null)
-          Align(
-            alignment: Alignment.bottomCenter,
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 32, left: 32, right: 32),
+              padding: const EdgeInsets.all(AppLayout.extraLargePadding),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
+                  Image.memory(
+                    _currentImageBytes!,
                     height: 200,
-                    child: Image.memory(
-                      _currentImageBytes!,
-                      fit: BoxFit.contain,
-                    ),
+                    fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: AppLayout.defaultPadding),
                   GtButton(
                     style: GtButtonStyle.elevated,
-                    onPressed:
-                        _isCompressing || widget.onResume == null
-                            ? null
-                            : _submit,
+                    onPressed: widget.onResume == null ? null : _submit,
                     child: const Text('Submit'),
                   ),
                 ],
