@@ -16,7 +16,7 @@ typedef ToolResumeCallback =
     });
 
 class GreenthumbService extends ChangeNotifier {
-  final host = 'server-605235355617.us-central1.run.app';
+  final host = 'flutter-genkit-demo-273031276541.us-central1.run.app';
   final port = 443;
   late final url = Uri.parse('https://$host:$port/greenThumb');
   late final headers = {'Content-Type': 'application/json'};
