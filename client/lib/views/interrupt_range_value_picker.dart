@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../greenthumb/service.dart';
 import '../widgets/gt_button.dart';
@@ -46,23 +47,48 @@ class _InterruptRangeValuePickerState extends State<InterruptRangeValuePicker> {
   }
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(32),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+  Widget build(BuildContext context) => Expanded(
+    child: Stack(
       children: [
-        MarkdownBody(
-          data: widget.question,
-          styleSheet: MarkdownStyleSheet(
-            p: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.4),
+        // Center the submit button vertically
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: GtButton(
+              style: GtButtonStyle.elevated,
+              onPressed:
+                  widget.onResume == null
+                      ? null
+                      : () {
+                        widget.onResume!(
+                          ref: widget.toolRef,
+                          name: widget.toolName,
+                          output: _currentValue.toString(),
+                        );
+                      },
+              child: const Text('Submit'),
+            ),
           ),
         ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.only(left: 40.0),
-          child: Center(
+        // Position question and range controls between app bar and button
+        Align(
+          alignment: const Alignment(0, -0.5),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
+                MarkdownBody(
+                  data: widget.question,
+                  styleSheet: MarkdownStyleSheet(
+                    p: GoogleFonts.notoSans(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: WrapAlignment.center,
+                  ),
+                ),
+                const SizedBox(height: 32),
                 Slider(
                   value: _currentValue.toDouble(),
                   min: widget.min.toDouble(),
@@ -76,20 +102,6 @@ class _InterruptRangeValuePickerState extends State<InterruptRangeValuePicker> {
                 Text(
                   _currentValue.toString(),
                   style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 16),
-                GtButton(
-                  onPressed:
-                      widget.onResume == null
-                          ? null
-                          : () {
-                            widget.onResume!(
-                              ref: widget.toolRef,
-                              name: widget.toolName,
-                              output: _currentValue.toString(),
-                            );
-                          },
-                  child: const Text('Submit'),
                 ),
               ],
             ),
