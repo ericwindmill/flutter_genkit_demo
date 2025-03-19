@@ -125,7 +125,7 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 GtButton(
-                  backgroundColor: const Color(0xFF2E7D32),
+                  style: GtButtonStyle.elevated,
                   onPressed: () {
                     Navigator.push(
                       context,

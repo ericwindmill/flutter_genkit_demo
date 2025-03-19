@@ -24,47 +24,48 @@ class InterruptChoicePicker extends StatelessWidget {
   final ToolResumeCallback? onResume;
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(32),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        MarkdownBody(
-          data: question,
-          styleSheet: MarkdownStyleSheet(
-            p: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.4),
-          ),
-        ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.only(left: 40.0),
-          child: Center(
-            child: Column(
-              children: [
-                for (final choice in choices)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: SizedBox(
-                      width: 300,
-                      child: GtButton(
-                        onPressed:
-                            selectedValue == null && onResume != null
-                                ? () => onResume!(
-                                  ref: toolRef,
-                                  name: toolName,
-                                  output: choice,
-                                )
-                                : null,
-
-                        child: Text(choice, textAlign: TextAlign.center),
+  Widget build(BuildContext context) => Expanded(
+    child: Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            MarkdownBody(
+              data: question,
+              styleSheet: MarkdownStyleSheet(
+                p: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.4),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Center(
+              child: Column(
+                children: [
+                  for (final choice in choices)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: SizedBox(
+                        width: 300,
+                        child: GtButton(
+                          onPressed:
+                              selectedValue == null && onResume != null
+                                  ? () => onResume!(
+                                    ref: toolRef,
+                                    name: toolName,
+                                    output: choice,
+                                  )
+                                  : null,
+                          child: Text(choice, textAlign: TextAlign.center),
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     ),
   );
 }

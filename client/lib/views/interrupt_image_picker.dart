@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image/image.dart' as img;
 
 import '../greenthumb/service.dart';
@@ -40,58 +41,79 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
   }
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(32),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+  Widget build(BuildContext context) => Expanded(
+    child: Stack(
       children: [
-        MarkdownBody(
-          data: widget.message.text,
-          styleSheet: MarkdownStyleSheet(
-            p: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.4),
+        // Keep the Take picture button centered vertically
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: GtButton(
+              style:
+                  _currentImageBytes == null
+                      ? GtButtonStyle.elevated
+                      : GtButtonStyle.outlined,
+              onPressed:
+                  _isCompressing || widget.onResume == null
+                      ? null
+                      : () => _getPicture(context),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.camera_alt),
+                  const SizedBox(width: 8),
+                  const Text('Take picture'),
+                ],
+              ),
+            ),
           ),
         ),
-        const SizedBox(height: 16),
-        Expanded(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                if (_currentImageBytes != null)
-                  Expanded(
+        // Position text block centered between app bar and button
+        Align(
+          alignment: const Alignment(0, -0.5),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: MarkdownBody(
+              data: widget.message.text,
+              styleSheet: MarkdownStyleSheet(
+                p: GoogleFonts.notoSans(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: WrapAlignment.center,
+              ),
+            ),
+          ),
+        ),
+        // Position image and submit button at bottom
+        if (_currentImageBytes != null)
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 32, left: 32, right: 32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    height: 200,
                     child: Image.memory(
                       _currentImageBytes!,
                       fit: BoxFit.contain,
                     ),
                   ),
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: OverflowBar(
-                    spacing: 16,
-                    children: [
-                      GtButton(
-                        onPressed:
-                            _isCompressing || widget.onResume == null
-                                ? null
-                                : () => _getPicture(context),
-                        child: const Text('Take Picture'),
-                      ),
-                      if (_currentImageBytes != null)
-                        GtButton(
-                          onPressed:
-                              _isCompressing || widget.onResume == null
-                                  ? null
-                                  : _submit,
-                          child: const Text('Submit'),
-                        ),
-                    ],
+                  const SizedBox(height: 16),
+                  GtButton(
+                    style: GtButtonStyle.elevated,
+                    onPressed:
+                        _isCompressing || widget.onResume == null
+                            ? null
+                            : _submit,
+                    child: const Text('Submit'),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
       ],
     ),
   );
