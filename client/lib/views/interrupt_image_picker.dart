@@ -140,8 +140,23 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
   }
 
   Future<Uint8List?> _resizeImageIfNeeded(Uint8List bytes) async {
+    debugPrint('Starting image resize operation with ${bytes.length} bytes');
+
     final originalImage = img.decodeImage(bytes);
-    if (originalImage == null) return null;
+    if (originalImage == null) {
+      debugPrint('Failed to decode image, returning null');
+      return null;
+    }
+
+    debugPrint(
+      'Original image dimensions: ${originalImage.width}x${originalImage.height}',
+    );
+
+    // Early bailout if image is already small enough
+    if (originalImage.width <= 400 && originalImage.height <= 400) {
+      debugPrint('Image already small enough, skipping resize');
+      return bytes;
+    }
 
     // resize image to max dimension of 400px while maintaining aspect ratio
     final resized = img.copyResize(
@@ -150,7 +165,12 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
       height: originalImage.height >= originalImage.width ? 400 : null,
     );
 
+    debugPrint('Resized image dimensions: ${resized.width}x${resized.height}');
+
     // encode as JPG with 85% quality and create data URL
-    return img.encodeJpg(resized, quality: 85);
+    final jpgBytes = img.encodeJpg(resized, quality: 85);
+    debugPrint('Compressed image size: ${jpgBytes.length} bytes');
+
+    return jpgBytes;
   }
 }

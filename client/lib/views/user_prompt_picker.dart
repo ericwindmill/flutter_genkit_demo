@@ -27,45 +27,49 @@ class UserPromptPicker extends StatelessWidget {
       const Spacer(flex: 1),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppLayout.largePadding),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            for (final action in GardeningAction.values)
-              Container(
-                width: 160,
-                height: 160,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryLight,
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap:
-                        onRequest != null
-                            ? () => onRequest!(action.prompt)
-                            : null,
+        child: Center(
+          child: Wrap(
+            spacing: AppLayout.extraLargePadding,
+            runSpacing: AppLayout.defaultPadding,
+            alignment: WrapAlignment.center,
+            children: [
+              for (final action in GardeningAction.values)
+                Container(
+                  width: 160,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryLight,
                     borderRadius: BorderRadius.circular(24),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          action.icon,
-                          size: 28,
-                          color: AppColors.primaryDark,
-                        ),
-                        SizedBox(height: AppLayout.defaultPadding),
-                        Text(
-                          action.buttonName,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.actionButton,
-                        ),
-                      ],
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap:
+                          onRequest != null
+                              ? () => onRequest!(action.prompt)
+                              : null,
+                      borderRadius: BorderRadius.circular(24),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            action.icon,
+                            size: 28,
+                            color: AppColors.primaryDark,
+                          ),
+                          SizedBox(height: AppLayout.defaultPadding),
+                          Text(
+                            action.buttonName,
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.actionButton,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
       const Spacer(flex: 2),
