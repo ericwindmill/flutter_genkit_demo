@@ -21,6 +21,12 @@ class GreenthumbService extends ChangeNotifier {
   late final url = Uri.parse('https://$host:$port/greenThumb');
   late final headers = {'Content-Type': 'application/json'};
 
+  // Local development
+  // late final host = PlatformUtil.isAndroidEmulator ? '10.0.2.2' : '127.0.0.1';
+  // final port = 3400;
+  // late final url = Uri.parse('http://$host:$port/greenThumb');
+  // late final headers = {'Content-Type': 'application/json'};
+
   final _messages = <RawMessage>[];
   List<Message> get messages => Message.messagesFrom(_messages);
   var _isLoading = false;
