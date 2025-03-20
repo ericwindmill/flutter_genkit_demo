@@ -11,6 +11,7 @@ import { genkit, MessageSchema, z } from "genkit/beta";
 import { ToolResponsePartSchema } from "genkit/model";
 import { Document } from "genkit/retriever";
 import { join } from "path";
+import { CorsOptions } from "cors";
 
 const ai = genkit({
   plugins: [
@@ -234,5 +235,11 @@ const greenThumb = ai.defineFlow(
 
 startFlowServer({
   port: 8080,
+  cors: {
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+  },
   flows: [indexProducts, greenThumb]
 });

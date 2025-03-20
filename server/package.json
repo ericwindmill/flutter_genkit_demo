@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/pdf-parse": "^1.1.4",
     "genkit-cli": "^1.0.4",
     "prettier": "3.5.1",
@@ -24,6 +25,7 @@
     "@genkit-ai/google-cloud": "^1.0.4",
     "@genkit-ai/googleai": "^1.0.4",
     "@genkit-ai/vertexai": "^1.0.5",
+    "cors": "^2.8.5",
     "genkit": "^1.0.4"
   },
   "directories": {
