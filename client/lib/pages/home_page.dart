@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../styles.dart';
@@ -28,9 +27,7 @@ class HomePage extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.shopping_cart),
                   color: AppColors.appBackground,
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                  },
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -114,15 +111,9 @@ class HomePage extends StatelessWidget {
                 GtButton(
                   style: GtButtonStyle.elevated,
                   onPressed: () async {
-                    final identityToken =
-                        await FirebaseAuth.instance.currentUser!.getIdToken();
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) =>
-                                WizardPage(identityToken: identityToken!),
-                      ),
+                      MaterialPageRoute(builder: (context) => WizardPage()),
                     );
                   },
                   child: Row(
