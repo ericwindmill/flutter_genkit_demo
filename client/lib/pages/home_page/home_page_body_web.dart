@@ -5,7 +5,7 @@ import 'package:flutter_fix_warehouse/widgets/app_navigation_bar.dart';
 import '../../styles.dart';
 import '../../widgets/gt_button.dart';
 import '../../widgets/sparkle_leaf.dart';
-import '../wizard_page.dart';
+import '../wizard_page/wizard_page.dart';
 
 class HomePageBodyWeb extends StatelessWidget {
   const HomePageBodyWeb({super.key, required this.projects});

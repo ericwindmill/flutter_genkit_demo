@@ -5,7 +5,7 @@ import '../../styles.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../../widgets/gt_button.dart';
 import '../../widgets/sparkle_leaf.dart';
-import '../wizard_page.dart';
+import '../wizard_page/wizard_page.dart';
 
 class HomePageBodyMobile extends StatelessWidget {
   const HomePageBodyMobile({super.key, required this.projects});

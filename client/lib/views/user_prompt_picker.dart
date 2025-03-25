@@ -24,7 +24,7 @@ class UserPromptPicker extends StatelessWidget {
           style: AppTextStyles.subheading,
         ),
       ),
-      const Spacer(flex: 1),
+      SizedBox(height: AppLayout.defaultPadding),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppLayout.largePadding),
         child: Center(

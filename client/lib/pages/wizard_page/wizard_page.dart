@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fix_warehouse/main.dart';
 
-import '../greenthumb/service.dart';
-import '../styles.dart';
-import '../views/interrupt_choice_picker.dart';
-import '../views/interrupt_image_picker.dart';
-import '../views/interrupt_range_value_picker.dart';
-import '../views/model_response_view.dart';
-import '../views/user_prompt_picker.dart';
-import '../views/view_model.dart';
-import '../widgets/app_navigation_bar.dart';
-import '../widgets/sparkle_leaf.dart';
+import '../../greenthumb/service.dart';
+import '../../styles.dart';
+import '../../views/interrupt_choice_picker.dart';
+import '../../views/interrupt_image_picker.dart';
+import '../../views/interrupt_range_value_picker.dart';
+import '../../views/model_response_view.dart';
+import '../../views/user_prompt_picker.dart';
+import '../../views/view_model.dart';
+import '../../widgets/app_navigation_bar.dart';
+import '../../widgets/sparkle_leaf.dart';
 
 class WizardPage extends StatefulWidget {
   const WizardPage({super.key});
@@ -27,6 +28,7 @@ class _WizardPageState extends State<WizardPage> {
     builder: (context, child) {
       final messages = _service.messages;
       final currentMessage = messages.isEmpty ? null : messages.last;
+      final screenWidth = MediaQuery.of(context).size.width;
 
       return Scaffold(
         backgroundColor: AppColors.appBackground,
@@ -50,11 +52,18 @@ class _WizardPageState extends State<WizardPage> {
           ],
           centerTitle: true,
         ),
-        body:
-            currentMessage == null
-                ? const Center(child: CircularProgressIndicator())
-                : _buildStepView(currentMessage, true),
-        bottomNavigationBar: const AppNavigationBar(),
+        body: Row(
+          children: [
+            if (screenWidth >= breakpoint) AppNavigationRail(),
+            currentMessage == null || _service.isLoading
+                ? const Expanded(
+                  child: Center(child: CircularProgressIndicator()),
+                )
+                : Expanded(child: _buildStepView(currentMessage, true)),
+          ],
+        ),
+        bottomNavigationBar:
+            screenWidth < breakpoint ? const AppNavigationBar() : null,
       );
     },
   );

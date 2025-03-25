@@ -59,11 +59,7 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
                     : () => _getPicture(context),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.camera_alt),
-                SizedBox(width: AppLayout.defaultPadding),
-                const Text('Take picture'),
-              ],
+              children: [const Text('Take picture')],
             ),
           ),
         ),
