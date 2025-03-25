@@ -35,3 +35,36 @@ class AppNavigationBar extends StatelessWidget {
     onDestinationSelected: (index) {},
   );
 }
+
+class AppNavigationRail extends StatelessWidget {
+  const AppNavigationRail({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return NavigationRail(
+      destinations: const [
+        NavigationRailDestination(
+          icon: Icon(Icons.shopping_bag_outlined, size: AppLayout.iconSize),
+          selectedIcon: Icon(Icons.shopping_bag, size: AppLayout.iconSize),
+          label: Text('Shop'),
+        ),
+        NavigationRailDestination(
+          icon: Icon(Icons.settings_outlined, size: AppLayout.iconSize),
+          selectedIcon: Icon(Icons.settings, size: AppLayout.iconSize),
+          label: Text('Services'),
+        ),
+        NavigationRailDestination(
+          icon: Icon(Icons.build_outlined, size: AppLayout.iconSize),
+          selectedIcon: Icon(Icons.build, size: AppLayout.iconSize),
+          label: Text('DIY'),
+        ),
+        NavigationRailDestination(
+          icon: Icon(Icons.person_outline, size: AppLayout.iconSize),
+          selectedIcon: Icon(Icons.person, size: AppLayout.iconSize),
+          label: Text('Login'),
+        ),
+      ],
+      selectedIndex: 0,
+    );
+  }
+}

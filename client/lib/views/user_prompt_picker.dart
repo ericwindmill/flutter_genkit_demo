@@ -20,7 +20,7 @@ class UserPromptPicker extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppLayout.largePadding),
         child: Text(
-          'What are you looking to do?',
+          'What would you like to do?',
           style: AppTextStyles.subheading,
         ),
       ),

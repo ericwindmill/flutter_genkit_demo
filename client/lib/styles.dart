@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 // Colors
 class AppColors {
-  static const primary = Color(0xFF4CAF50);
+  static const primary = Color(0xFF2E617D);
   static const primaryDark = Color(0xFF2E7D32);
   static const primaryLight = Color(0xFFC8E6C9);
   static const textPrimary = Colors.black;
@@ -19,11 +19,7 @@ class AppTextStyles {
     fontSize: 32,
     fontWeight: FontWeight.normal,
     letterSpacing: 0,
-    foreground:
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1
-          ..color = AppColors.appBackground,
+    foreground: Paint()..color = AppColors.appBackground,
   );
 
   static TextStyle get appBarTitle => GoogleFonts.notoSans(

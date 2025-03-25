@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node lib/index.js",
     "build": "tsc",
+    "dev": "genkit start -- ts-node index.ts",
     "test": "echo \"Error: no test specified\"",
     "index-products": "genkit flow:run indexProducts"
   },
