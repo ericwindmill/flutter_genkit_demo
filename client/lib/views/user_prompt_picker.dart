@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fix_warehouse/main.dart';
 
 import '../greenthumb/service.dart';
 import '../styles.dart';
@@ -14,79 +15,99 @@ class UserPromptPicker extends StatelessWidget {
   final ToolRequestCallback? onRequest;
 
   @override
-  Widget build(BuildContext context) => Column(
-    children: [
-      const Spacer(flex: 1),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppLayout.largePadding),
-        child: Text(
-          'What would you like to do?',
-          style: AppTextStyles.subheading,
-        ),
-      ),
-      SizedBox(height: AppLayout.defaultPadding),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppLayout.largePadding),
-        child: Center(
-          child: Wrap(
-            spacing: AppLayout.extraLargePadding,
-            runSpacing: AppLayout.defaultPadding,
-            alignment: WrapAlignment.center,
-            children: [
-              for (final action in GardeningAction.values)
-                Container(
-                  width: 160,
-                  height: 160,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryLight,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap:
-                          onRequest != null
-                              ? () => onRequest!(action.prompt)
-                              : null,
-                      borderRadius: BorderRadius.circular(24),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            action.icon,
-                            size: 28,
-                            color: AppColors.primaryDark,
+  Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var padding = 10.0;
+    if (width >= breakpoint) {
+      padding = width / 6;
+    }
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: padding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Spacer(flex: 1),
+          Text(
+            'Welcome to',
+            style: AppTextStyles.body,
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Text(
+              'GreenThumb!',
+              style: AppTextStyles.heading,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Text(
+            'GreenThumb provides gardening advice based on your unique circumstance.',
+            style: AppTextStyles.body,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: AppLayout.largePadding),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppLayout.largePadding,
+            ),
+            child: Center(
+              child: Wrap(
+                spacing: AppLayout.extraLargePadding,
+                runSpacing: AppLayout.defaultPadding,
+                alignment: WrapAlignment.center,
+                children: [
+                  for (final action in GardeningAction.values)
+                    Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryLight,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap:
+                              onRequest != null
+                                  ? () => onRequest!(action.prompt)
+                                  : null,
+                          borderRadius: BorderRadius.circular(24),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                action.icon,
+                                size: 28,
+                                color: AppColors.primaryDark,
+                              ),
+                              SizedBox(height: AppLayout.defaultPadding),
+                              Text(
+                                action.buttonName,
+                                textAlign: TextAlign.center,
+                                style: AppTextStyles.actionButton,
+                              ),
+                            ],
                           ),
-                          SizedBox(height: AppLayout.defaultPadding),
-                          Text(
-                            action.buttonName,
-                            textAlign: TextAlign.center,
-                            style: AppTextStyles.actionButton,
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-            ],
+                ],
+              ),
+            ),
           ),
-        ),
+          const Spacer(flex: 2),
+        ],
       ),
-      const Spacer(flex: 2),
-    ],
-  );
+    );
+  }
 }
 
 enum GardeningAction {
   expandGarden(
-    buttonName: 'Expand my\ngarden',
+    buttonName: 'Get started',
     icon: Icons.local_florist_outlined,
     prompt: 'I\'d like to expand my garden.',
-  ),
-  keepGardenHealthy(
-    buttonName: 'Keep my\ngarden healthy',
-    icon: Icons.water_drop_outlined,
-    prompt: 'I\'d like to keep my garden healthy.',
   );
 
   const GardeningAction({

@@ -133,4 +133,156 @@ class ModelResponse extends Message {
 
   @override
   String get text => _rawMessage.content.first.text!;
+
+  /// This method takes the markdown response and parses into
+  /// structured data so we can make it look good on screen.
+  // See /server/index.ts variable gtSystem to see the markdown structure
+  ModelResponseText get modelResponseText {
+    var recommendations = <Recommendation>[];
+    // This splits the text at the beginning of new products
+    // The first item will contain the intro text, and the remaining
+    // items will be recommendations
+    final splitText = text.trim().split('##');
+    var preamble = splitText.first.trim();
+
+    // remove lines that are just newlines or spaces, if any
+    final rawRecommendations = splitText.sublist(1).where((line) {
+      return line.trim().length > 1;
+    });
+
+    try {
+      for (var recommendationMarkdown in rawRecommendations) {
+        var lines = recommendationMarkdown.split('\n');
+        // remove lines that are just newlines or spaces, if any
+        lines =
+            lines.where((line) {
+              return line.trim().length > 1;
+            }).toList();
+
+        // get rec title
+        final recTitle = lines.first.trim();
+        lines.removeAt(0);
+
+        // get rec description
+        final productTitleLineIndex = lines.indexWhere(
+          (line) => line.trim().startsWith('-'),
+        );
+        final recDescriptionLines = lines.sublist(0, productTitleLineIndex);
+        final recDescription = recDescriptionLines.join(' ');
+        lines = lines.sublist(productTitleLineIndex);
+
+        // get rec product
+        final recProductTitle = lines.removeAt(0).substring(1).trim();
+
+        // Price line looks like this:
+        // **$15.0** from AquaFlow
+
+        for (var l in lines) {
+          print(l);
+        }
+        final priceLine = lines.firstWhere((line) {
+          return line.trim().startsWith('**');
+        }, orElse: () => '**\$29.99** from GreenThumb');
+        final priceLineSplit = priceLine.trim().split('**');
+        final price = priceLineSplit.firstWhere((str) => str.startsWith('\$'));
+        final manufacturer = priceLineSplit.last.split('from').last.trim();
+
+        String? imageLine = lines.firstWhere(
+          (line) => line.trim().startsWith('![]('),
+          orElse: () => 'no image',
+        );
+        List<String> imageSplit = imageLine.split('![](');
+        String? image = imageSplit[1].split(')').first;
+
+        recommendations.add(
+          Recommendation(
+            title: recTitle,
+            description: recDescription,
+            product: Product(
+              name: recProductTitle,
+              manufacturer: manufacturer,
+              cost: price,
+              image: image,
+              description: '',
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      recommendations.add(
+        Recommendation(
+          title: 'Give plants more nutrients',
+          description:
+              'Plants need nutrients too. It helps them thrive, especially in unnatural environments.',
+          product: Product(
+            name: 'Super Plant Food',
+            manufacturer: 'GreenThumb',
+            cost: '14',
+            description:
+                "A 24-ounce bottle of liquid plant food concentrate. "
+                "Dilute with water for weekly feeding",
+          ),
+        ),
+      );
+    }
+
+    if (preamble.contains(':')) {
+      preamble = preamble.split(':').sublist(1).join('').trim();
+    }
+
+    return ModelResponseText(
+      intro: preamble,
+      recommendations: recommendations,
+      raw: text,
+    );
+  }
+}
+
+class ModelResponseText {
+  final String intro;
+  final List<Recommendation> recommendations;
+  final String raw;
+
+  // if recommendations are empty or all the recommendations are
+  // the hardcoded seed rec, then parsing failed.
+  bool get didParse {
+    if (recommendations.isEmpty) return false;
+    return recommendations.any((rec) {
+      return rec.title != 'Give plants more nutrients';
+    });
+  }
+
+  ModelResponseText({
+    String? intro,
+    required this.recommendations,
+    required this.raw,
+  }) : intro = intro ?? '';
+}
+
+class Recommendation {
+  final String title;
+  final String description;
+  final Product product;
+
+  Recommendation({
+    required this.title,
+    required this.description,
+    required this.product,
+  });
+}
+
+class Product {
+  final String name;
+  final String manufacturer;
+  final String cost;
+  final String description;
+  final String? image;
+
+  Product({
+    required this.name,
+    required this.manufacturer,
+    required this.cost,
+    required this.description,
+    this.image,
+  });
 }

@@ -64,6 +64,11 @@ class Content {
     if (metadata != null) 'metadata': metadata!.toJson(),
     if (toolResponse != null) 'toolResponse': toolResponse!.toJson(),
   };
+
+  @override
+  String toString() {
+    return 'Content{text: $text, toolRequest: $toolRequest, metadata: $metadata, toolResponse: $toolResponse}';
+  }
 }
 
 class ContentMetadata {

@@ -10,6 +10,7 @@ class AppColors {
   static const textSecondary = Color(0xFF666666);
   static const appBackground = Colors.white;
   static const grey = Colors.grey;
+  static const panelBackground = Color(0x3F3B814E);
   static const navigationBarBackground = AppColors.appBackground;
 }
 
@@ -50,8 +51,7 @@ class AppTextStyles {
     color: AppColors.appBackground,
   );
 
-  static TextStyle get body =>
-      GoogleFonts.notoSans(fontSize: 20, fontWeight: FontWeight.bold);
+  static TextStyle get body => GoogleFonts.notoSans(fontSize: 18);
 
   static TextStyle get actionButton => GoogleFonts.notoSans(
     fontSize: 14,
