@@ -5,13 +5,17 @@ import 'package:google_fonts/google_fonts.dart';
 class AppColors {
   static const primary = Color(0xFF3B814E);
   static const primaryDark = Color(0xFF30693F);
-  static const primaryLight = Color(0xFFB7FCCA);
+  static const primaryLight = Color.fromRGBO(245, 250, 241, 1);
+  static const primaryLightHover = Color.fromRGBO(189, 201, 180, 1.0);
   static const textPrimary = Colors.black;
   static const textSecondary = Color(0xFF666666);
   static const appBackground = Colors.white;
   static const grey = Colors.grey;
-  static const panelBackground = Color(0x3F3B814E);
+  static const panelBackground = Color(0x3FF8F8F8);
   static const navigationBarBackground = AppColors.appBackground;
+
+  static const infoBlue = Color(0xFF373880);
+  static const infoBlueLight = Color(0x1F373880);
 }
 
 // Text Styles

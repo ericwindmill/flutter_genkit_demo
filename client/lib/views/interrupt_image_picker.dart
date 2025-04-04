@@ -156,8 +156,8 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
     // resize image to max dimension of 400px while maintaining aspect ratio
     final resized = img.copyResize(
       originalImage,
-      width: originalImage.width > originalImage.height ? 400 : null,
-      height: originalImage.height >= originalImage.width ? 400 : null,
+      width: originalImage.width > originalImage.height ? 350 : null,
+      height: originalImage.height >= originalImage.width ? 350 : null,
     );
 
     debugPrint('Resized image dimensions: ${resized.width}x${resized.height}');

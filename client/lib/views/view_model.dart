@@ -176,10 +176,6 @@ class ModelResponse extends Message {
 
         // Price line looks like this:
         // **$15.0** from AquaFlow
-
-        for (var l in lines) {
-          print(l);
-        }
         final priceLine = lines.firstWhere((line) {
           return line.trim().startsWith('**');
         }, orElse: () => '**\$29.99** from GreenThumb');
@@ -252,6 +248,23 @@ class ModelResponseText {
     });
   }
 
+  // only show one reminder widget per LLM response
+  bool hasReminder = false;
+
+  bool shouldShowReminderForRecommendation(Recommendation rec) {
+    if (hasReminder) return false;
+
+    final reminderIshWords = ['regular', 'more'];
+    for (var word in reminderIshWords) {
+      if (rec.title.contains(word)) {
+        hasReminder = true;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   ModelResponseText({
     String? intro,
     required this.recommendations,
@@ -286,3 +299,16 @@ class Product {
     this.image,
   });
 }
+
+final reminderRecommendation = Recommendation(
+  title: 'Water every morning during peak summer months',
+  description:
+      "During hot, dry months, its best to water your garden in the morning, so it doesn't completely dry out during the day.",
+  product: Product(
+    name: 'Product',
+    manufacturer: '',
+    cost: '',
+    description: '',
+    image: '',
+  ),
+);

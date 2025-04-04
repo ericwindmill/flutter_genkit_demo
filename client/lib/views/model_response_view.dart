@@ -1,9 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_fix_warehouse/main.dart';
+import 'package:flutter_fix_warehouse/widgets/sparkle_leaf.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:material_symbols_icons/symbols.dart';
 
 import '../styles.dart';
 import 'view_model.dart';
+
+final _random = Random();
 
 class ModelResponseView extends StatefulWidget {
   const ModelResponseView({required this.message, super.key});
@@ -28,7 +34,38 @@ class _ModelResponseViewState extends State<ModelResponseView> {
     parsedMessage = widget.message.modelResponseText;
     if (parsedMessage.didParse) {
       for (var rec in parsedMessage.recommendations) {
-        recommendationWidgets.add(_RecommendationWidget(rec));
+        if (parsedMessage.shouldShowReminderForRecommendation(rec)) {
+          recommendationWidgets.add(
+            Padding(
+              padding: const EdgeInsets.only(left: AppLayout.defaultPadding),
+              child: _RecommendationWidget(rec, shouldShowReminder: true),
+            ),
+          );
+        } else {
+          recommendationWidgets.add(
+            Padding(
+              padding: const EdgeInsets.only(left: AppLayout.defaultPadding),
+              child: _RecommendationWidget(rec),
+            ),
+          );
+        }
+      }
+
+      // TODO(ewindmill): Remove before deploying.
+      //  This adds an additional widget some amount of the time, which in reality
+      // will happen rarely and is based on the the LLMs response.
+      final replace =
+          _random.nextInt(100) < 50 &&
+          !parsedMessage.hasReminder &&
+          recommendationWidgets.length >= 2;
+      if (replace) {
+        recommendationWidgets[1] = Padding(
+          padding: const EdgeInsets.only(left: AppLayout.defaultPadding),
+          child: _RecommendationWidget(
+            reminderRecommendation,
+            shouldShowReminder: true,
+          ),
+        );
       }
       visibleRecs.add(recommendationWidgets.first);
     }
@@ -97,18 +134,29 @@ class _ModelResponseViewState extends State<ModelResponseView> {
   Widget build(BuildContext context) {
     bool isMobile = MediaQuery.of(context).size.width <= breakpoint;
     if (parsedMessage.didParse) {
-      return Padding(
-        padding: const EdgeInsets.all(AppLayout.defaultPadding),
-        child: ListView(
-          children: [
-            Text('Recommendations', style: AppTextStyles.heading),
-            Text(parsedMessage.intro),
-            if (isMobile) recommendationWidgets[activeIndex],
-            if (isMobile) _mobileControls(),
-            if (!isMobile) ...visibleRecs,
-            if (!isMobile) _webControls(),
-          ],
-        ),
+      return ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Recommendations', style: AppTextStyles.heading),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: SizedBox(width: 500, child: Text(parsedMessage.intro)),
+            ),
+          ),
+          SizedBox(height: 10),
+          if (isMobile) recommendationWidgets[activeIndex],
+          if (isMobile) SizedBox(height: 10),
+          if (isMobile) _mobileControls(),
+          if (!isMobile) ...visibleRecs,
+          if (!isMobile) SizedBox(height: 10),
+          if (!isMobile) _webControls(),
+          SizedBox(height: 20),
+        ],
       );
     }
 
@@ -124,6 +172,8 @@ class _ModelResponseViewState extends State<ModelResponseView> {
             imageBuilder: (uri, title, alt) {
               final image = uri.toString();
               return Image.asset(
+                height: 200,
+                width: 200,
                 'assets/product-images/$image',
                 errorBuilder: (context, error, stackTrace) {
                   debugPrint('Error loading image: $error');
@@ -139,23 +189,41 @@ class _ModelResponseViewState extends State<ModelResponseView> {
 }
 
 class _RecommendationWidget extends StatelessWidget {
-  const _RecommendationWidget(this.recommendation, {super.key});
+  const _RecommendationWidget(
+    this.recommendation, {
+    super.key,
+    this.shouldShowReminder = false,
+  });
   final Recommendation recommendation;
+  final bool shouldShowReminder;
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = MediaQuery.of(context).size.width <= breakpoint;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           recommendation.title,
-          style: AppTextStyles.subheading.copyWith(fontSize: 16),
+          style: AppTextStyles.subheading.copyWith(
+            fontSize: isMobile ? 16 : 18,
+          ),
         ),
-        Text(recommendation.description),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: _ProductWidget(recommendation.product),
+        SizedBox(height: 5),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: SizedBox(
+            width: 500,
+            child: Text(
+              recommendation.description,
+              style: AppTextStyles.body.copyWith(fontSize: isMobile ? 13 : 14),
+            ),
+          ),
         ),
+        SizedBox(height: 10),
+        if (shouldShowReminder) _SetReminderWidget(),
+        if (!shouldShowReminder) _ProductWidget(recommendation.product),
+        SizedBox(height: 25),
       ],
     );
   }
@@ -177,6 +245,124 @@ class _ProductWidgetState extends State<_ProductWidget> {
   Widget build(BuildContext context) {
     final bool isMobile = MediaQuery.of(context).size.width <= breakpoint;
 
+    return Container(
+      width:
+          isMobile
+              ? min(
+                400,
+                MediaQuery.of(context).size.width -
+                    (AppLayout.defaultPadding * 2),
+              )
+              : 400,
+      height: 85,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.primary, width: 2),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8),
+              bottomLeft: Radius.circular(8),
+            ),
+            child: Image.asset(
+              'assets/product-images/${widget.product.image}',
+              errorBuilder: (context, error, stackTrace) {
+                debugPrint('Error loading image: $error');
+                return ProductPlaceholderSparkleLeaf();
+              },
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.product.name,
+                    style: AppTextStyles.heading.copyWith(fontSize: 14),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    '${widget.product.cost} from ${widget.product.manufacturer}',
+                    style: AppTextStyles.body.copyWith(fontSize: 13),
+                  ),
+                  Spacer(),
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Text(
+                      'See product details',
+                      style: AppTextStyles.body.copyWith(
+                        fontSize: isMobile ? 12 : 14,
+                        color: Colors.blue.shade700,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            onEnter: (_) {
+              setState(() {
+                isHovered = true;
+              });
+            },
+            onExit: (_) {
+              setState(() {
+                isHovered = false;
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+                border: Border(left: BorderSide(width: .1)),
+                color: isHovered ? AppColors.primaryLight : Colors.transparent,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Symbols.add_shopping_cart, color: AppColors.primary),
+                  Text(
+                    'Add to cart',
+                    style: AppTextStyles.breadcrumb.copyWith(
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SetReminderWidget extends StatefulWidget {
+  const _SetReminderWidget({super.key});
+
+  @override
+  State<_SetReminderWidget> createState() => _SetReminderWidgetState();
+}
+
+class _SetReminderWidgetState extends State<_SetReminderWidget> {
+  bool isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isMobile = MediaQuery.of(context).size.width <= breakpoint;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) {
@@ -192,56 +378,66 @@ class _ProductWidgetState extends State<_ProductWidget> {
       child: Container(
         width:
             isMobile
-                ? MediaQuery.of(context).size.width -
-                    (AppLayout.defaultPadding * 2)
+                ? min(
+                  400,
+                  MediaQuery.of(context).size.width -
+                      (AppLayout.defaultPadding * 2),
+                )
                 : 400,
-        height: isMobile ? 75 : 100,
+        height: 85,
         decoration: BoxDecoration(
-          color: isHovered ? AppColors.panelBackground : Colors.white60,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: AppColors.primary, width: 2),
+          border: Border.all(color: AppColors.infoBlue, width: 2),
+          color:
+              isHovered
+                  ? AppColors.infoBlueLight.withValues(alpha: .1)
+                  : AppColors.infoBlueLight,
         ),
-        padding: EdgeInsets.all(4),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.asset(
-                'assets/product-images/${widget.product.image}',
-                errorBuilder: (context, error, stackTrace) {
-                  debugPrint('Error loading image: $error');
-                  return SizedBox(height: 100, child: Text('no image'));
-                },
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Add reminder',
+                          style: AppTextStyles.heading.copyWith(fontSize: 14),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(width: 4),
+                        Icon(
+                          Symbols.open_in_new,
+                          size: 18,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'Add a weekly recurring event to your calendar to remind you.',
+                      style: AppTextStyles.body.copyWith(fontSize: 13),
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.product.name,
-                  style: AppTextStyles.heading.copyWith(
-                    fontSize: isMobile ? 14 : 16,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
                 ),
-                Text(
-                  '${widget.product.cost} from ${widget.product.manufacturer}',
-                  style: AppTextStyles.body.copyWith(
-                    fontSize: isMobile ? 12 : 14,
-                  ),
-                ),
-                Spacer(),
-                Text(
-                  'Add to cart',
-                  style: AppTextStyles.body.copyWith(
-                    fontSize: isMobile ? 12 : 14,
-                    color: Colors.blue.shade700,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Icon(Symbols.add_alarm, color: AppColors.infoBlue)],
+              ),
             ),
           ],
         ),
