@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 
 import '../greenthumb/data.dart';
 
@@ -137,6 +138,8 @@ class ModelResponse extends Message {
   /// This method takes the markdown response and parses into
   /// structured data so we can make it look good on screen.
   // See /server/index.ts variable gtSystem to see the markdown structure
+  // TODO: This is a mess. It's extremely fragile. This is a band-aid that will get us through Cloud Next without having to re-dploy.
+  // If you're reading this after the fact, you should not copy this. Instead, you should return structured data from your Genkit flows
   ModelResponseText get modelResponseText {
     var recommendations = <Recommendation>[];
     // This splits the text at the beginning of new products
@@ -150,8 +153,8 @@ class ModelResponse extends Message {
       return line.trim().length > 1;
     });
 
-    try {
-      for (var recommendationMarkdown in rawRecommendations) {
+    for (var recommendationMarkdown in rawRecommendations) {
+      try {
         var lines = recommendationMarkdown.split('\n');
         // remove lines that are just newlines or spaces, if any
         lines =
@@ -160,7 +163,12 @@ class ModelResponse extends Message {
             }).toList();
 
         // get rec title
-        final recTitle = lines.first.trim();
+        final recTitleWords = lines.first.trim().split(' ');
+        // unify the casing of all titles.
+        for (var i = 1; i < recTitleWords.length; i++) {
+          recTitleWords[i] = recTitleWords[i].toLowerCase();
+        }
+        final recTitle = recTitleWords.join(' ');
         lines.removeAt(0);
 
         // get rec description
@@ -197,31 +205,20 @@ class ModelResponse extends Message {
             product: Product(
               name: recProductTitle,
               manufacturer: manufacturer,
-              cost: price,
+              cost: int.tryParse(price) ?? 12,
               image: image,
               description: '',
             ),
           ),
         );
+      } catch (e, s) {
+        debugPrint(e.toString());
+        debugPrint(s.toString());
       }
-    } catch (e) {
-      recommendations.add(
-        Recommendation(
-          title: 'Give plants more nutrients',
-          description:
-              'Plants need nutrients too. It helps them thrive, especially in unnatural environments.',
-          product: Product(
-            name: 'Super Plant Food',
-            manufacturer: 'GreenThumb',
-            cost: '14',
-            description:
-                "A 24-ounce bottle of liquid plant food concentrate. "
-                "Dilute with water for weekly feeding",
-          ),
-        ),
-      );
     }
 
+    // Remove the part of the response where the LLM says something generic like
+    // 'These are my final recommendations'.
     if (preamble.contains(':')) {
       preamble = preamble.split(':').sublist(1).join('').trim();
     }
@@ -254,12 +251,9 @@ class ModelResponseText {
   bool shouldShowReminderForRecommendation(Recommendation rec) {
     if (hasReminder) return false;
 
-    final reminderIshWords = ['regular', 'more'];
-    for (var word in reminderIshWords) {
-      if (rec.title.contains(word)) {
-        hasReminder = true;
-        return true;
-      }
+    if (rec.title.contains('water')) {
+      hasReminder = true;
+      return true;
     }
 
     return false;
@@ -287,7 +281,7 @@ class Recommendation {
 class Product {
   final String name;
   final String manufacturer;
-  final String cost;
+  final int cost;
   final String description;
   final String? image;
 
@@ -299,16 +293,3 @@ class Product {
     this.image,
   });
 }
-
-final reminderRecommendation = Recommendation(
-  title: 'Water every morning during peak summer months',
-  description:
-      "During hot, dry months, its best to water your garden in the morning, so it doesn't completely dry out during the day.",
-  product: Product(
-    name: 'Product',
-    manufacturer: '',
-    cost: '',
-    description: '',
-    image: '',
-  ),
-);

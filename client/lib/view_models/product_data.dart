@@ -1,0 +1,443 @@
+import 'package:flutter_fix_warehouse/view_models/view_model.dart';
+
+/// These are some of the products from the product lookup tool. Useful for testing UI.
+
+final reminderRecommendation = Recommendation(
+  title: 'Water every morning during peak summer months',
+  description:
+      "During hot, dry months, its best to water your garden in the morning, so it doesn't completely dry out during the day.",
+  product: Product(
+    name: 'Product',
+    manufacturer: '',
+    cost: 0,
+    description: '',
+    image: '',
+  ),
+);
+
+final errorRec = Recommendation(
+  title: 'Give plants more nutrients',
+  description:
+      'Plants need nutrients too. It helps them thrive, especially in unnatural environments.',
+  product: Product(
+    name: 'Super Plant Food',
+    manufacturer: 'GreenThumb',
+    cost: 17,
+    image: "GroWell-Soil_Fertilizers-Liquid_Plant_Food.png",
+    description:
+        "A 24-ounce bottle of liquid plant food concentrate. "
+        "Dilute with water for weekly feeding",
+  ),
+);
+
+final products = [
+  Product(
+    name: 'Super Plant Food',
+    manufacturer: 'GreenThumb',
+    cost: 17,
+    image: "GroWell-Soil_Fertilizers-Liquid_Plant_Food.png",
+    description:
+        "A 24-ounce bottle of liquid plant food concentrate. "
+        "Dilute with water for weekly feeding",
+  ),
+  Product(
+    name: "Apple Tree Sapling",
+    manufacturer: "OrchardPro",
+    description:
+        "A young apple tree sapling of a hardy variety. It is ready for transplanting into the yard and will bear fruit in a few growing seasons.",
+    cost: 30,
+    image: "OrchardPro-Plants_Seeds-Apple_Tree_Sapling.png",
+  ),
+  Product(
+    name: "Self-Watering Planter",
+    manufacturer: "AquaPlanter",
+    description:
+        "A self-watering planter with an internal reservoir and 10-inch pot diameter. It automatically hydrates plants by wicking water from the base, reducing watering frequency and preventing overwatering.",
+    cost: 22,
+    image: "AquaPlanter-Planters_Pots-Self_Watering_Planter.png",
+  ),
+  Product(
+    name: "Hand Trowel",
+    manufacturer: "GreenGrow",
+    description:
+        "A small hand trowel made of rust-resistant stainless steel. Ideal for digging holes, transplanting seedlings, and mixing soil in planters.",
+    cost: 8,
+    image: "GreenGrow-Gardening_Tools-Hand_Trowel.png",
+  ),
+  Product(
+    name: "Cedar Mulch",
+    manufacturer: "TerraGreen",
+    description:
+        "A 2 cubic foot bag of natural cedar mulch chips. Helps suppress weeds, retains soil moisture, and adds a finished look to garden beds with its rich brown color.",
+    cost: 7,
+    image: "TerraGreen-Soil_Fertilizers-Cedar_Mulch.png",
+  ),
+  Product(
+    name: "Tulip Bulbs (Assorted)",
+    manufacturer: "FloraBloom",
+    description:
+        "A bag of assorted tulip bulbs for vibrant spring blooms. Easy to plant in fall, they produce colorful flowers to brighten up garden beds.",
+    cost: 10,
+    image: "FloraBloom-Plants_Seeds-Tulip_Bulbs_Assorted.png",
+  ),
+  Product(
+    name: "Hanging Planter Basket",
+    manufacturer: "PlanterPro",
+    description:
+        "A 12-inch hanging planter basket with a coconut coir liner and metal chain. Perfect for trailing flowers or vines, adding vertical interest to porches or patios.",
+    cost: 12,
+    image: "PlanterPro-Planters_Pots-Hanging_Planter_Basket.png",
+  ),
+  Product(
+    name: "Raised Garden Bed Kit",
+    manufacturer: "EasyGrow",
+    description:
+        "A raised garden bed kit made of weather-resistant cedar wood planks. It assembles easily to create a 4x4 foot garden box, perfect for growing vegetables or flowers in a contained space.",
+    cost: 60,
+    image: "EasyGrow-Planters_Pots-Raised_Garden_Bed_Kit.png",
+  ),
+  Product(
+    name: "Vegetable Fertilizer",
+    manufacturer: "NutriGrow",
+    description:
+        "A 5-pound bag of granular vegetable fertilizer rich in nutrients. It promotes strong growth and higher yields in tomatoes, peppers, and other vegetables.",
+    cost: 15,
+    image: "NutriGrow-Soil_Fertilizers-Vegetable_Fertilizer.png",
+  ),
+  Product(
+    name: "Bonsai Tree (Juniper)",
+    manufacturer: "ZenGarden Co",
+    description:
+        "A young juniper bonsai tree in a ceramic pot, carefully trained. It brings a peaceful, miniature landscape to desktops and requires regular pruning and care.",
+    cost: 35,
+    image: "ZenGarden_Co-Plants_Seeds-Bonsai_Tree_Juniper.png",
+  ),
+  Product(
+    name: "Cactus (Small)",
+    manufacturer: "DesertBloom",
+    description:
+        "A small potted cactus in a 4-inch container, easy to care for. It adds a desert touch to indoor plant collections and needs infrequent watering.",
+    cost: 8,
+    image: "DesertBloom-Plants_Seeds-Cactus_Small.png",
+  ),
+  Product(
+    name: "Lavender Plant",
+    manufacturer: "BloomField",
+    description:
+        "A mature lavender plant that features aromatic purple blooms. It attracts pollinators and is perfect for garden borders or patio containers.",
+    cost: 15,
+    image: "BloomField-Plants_Seeds-Lavender_Plant.png",
+  ),
+  Product(
+    name: "Heirloom Tomato Seeds",
+    manufacturer: "GreenLeaf Seeds",
+    description:
+        "A packet of organic heirloom tomato seeds known for their rich flavor. They are ideal for home vegetable gardens and seed-saving enthusiasts.",
+    cost: 4,
+    image: "GreenLeaf_Seeds-Plants_Seeds-Heirloom_Tomato_Seeds.png",
+  ),
+  Product(
+    name: "Pruning Shears",
+    manufacturer: "TrimFast",
+    description:
+        "A pair of sharp bypass pruning shears with carbon steel blades. Perfect for trimming plant stems and branches up to 3/4 inch thick.",
+    cost: 15,
+    image: "TrimFast-Gardening_Tools-Pruning_Shears.png",
+  ),
+  Product(
+    name: "Blueberry Bush",
+    manufacturer: "BerryLand",
+    description:
+        "A 2-year-old blueberry bush that produces sweet, edible berries. It is hardy and suitable for planting in home gardens or patio containers.",
+    cost: 18,
+    image: "BerryLand-Plants_Seeds-Blueberry_Bush.png",
+  ),
+  Product(
+    name: "Succulent Collection (Mixed)",
+    manufacturer: "DesertBloom",
+    description:
+        "A set of five assorted succulent plants in 2-inch pots. These low-maintenance plants are perfect for indoor decor and require minimal watering.",
+    cost: 15,
+    image: "DesertBloom-Plants_Seeds-Succulent_Collection_Mixed.png",
+  ),
+  Product(
+    name: "Garden Spade",
+    manufacturer: "GardenMaster",
+    description:
+        "A heavy-duty garden spade with a solid steel blade and wooden handle. Excellent for digging, edging, and transplanting in tough soil.",
+    cost: 25,
+    image: "GardenMaster-Gardening_Tools-Garden_Spade.png",
+  ),
+  Product(
+    name: "Garden Gnome",
+    manufacturer: "YardArt",
+    description:
+        "A classic garden gnome statue made of weather-resistant resin, standing 12 inches tall. This cheerful figurine adds whimsy and character to any lawn or flower bed.",
+    cost: 18,
+    image: "YardArt-Decor-Garden_Gnome.png",
+  ),
+  Product(
+    name: "Lettuce Seeds (Salad Mix)",
+    manufacturer: "SproutMaster",
+    description:
+        "A packet of mixed lettuce seeds for growing a variety of salad greens. They germinate quickly and are ideal for raised beds or container gardens.",
+    cost: 3,
+    image: "SproutMaster-Plants_Seeds-Lettuce_Seeds_Salad_Mix.png",
+  ),
+  Product(
+    name: "Garden Hoe",
+    manufacturer: "GardenMaster",
+    description:
+        "A sturdy garden hoe with a 6-inch steel blade and long wooden handle. Useful for weeding, shaping soil, and clearing garden beds.",
+    cost: 18,
+    image: "GardenMaster-Gardening_Tools-Garden_Hoe.png",
+  ),
+  Product(
+    name: "Marigold Seeds",
+    manufacturer: "SeedCo",
+    description:
+        "A packet of marigold seeds that grow bright, pest-repelling flowers. These easy-to-grow annuals are perfect for edging vegetable gardens or flower beds.",
+    cost: 2,
+    image: "SeedCo-Plants_Seeds-Marigold_Seeds.png",
+  ),
+  Product(
+    name: "Window Box Planter",
+    manufacturer: "FloraHome",
+    description:
+        "A 30-inch window box planter constructed from durable resin. It fits easily on railings or windowsills and is ideal for growing herbs or ornamental flowers in small spaces.",
+    cost: 18,
+    image: "FloraHome-Planters_Pots-Window_Box_Planter.png",
+  ),
+  Product(
+    name: "Organic Potting Soil",
+    manufacturer: "EarthWorks",
+    description:
+        "A 1 cubic foot bag of organic potting soil enriched with compost and perlite. Provides excellent drainage and nutrients for container gardening and houseplants.",
+    cost: 12,
+    image: "EarthWorks-Soil_Fertilizers-Organic_Potting_Soil.png",
+  ),
+  Product(
+    name: "Wind Chimes",
+    manufacturer: "ChimeCraft",
+    description:
+        "A set of melodic wind chimes made from aluminum tubes and a wooden top. It produces soothing tones in the breeze, creating a relaxing atmosphere on porches or in gardens.",
+    cost: 20,
+    image: "ChimeCraft-Decor-Wind_Chimes.png",
+  ),
+  Product(
+    name: "Plastic Planter (18 inch)",
+    manufacturer: "GardenElite",
+    description:
+        "A large 18-inch plastic planter pot that is lightweight yet sturdy. Perfect for outdoor use, it withstands weather and is great for bushes or floral arrangements.",
+    cost: 20,
+    image: "GardenElite-Planters_Pots-Plastic_Planter_18_inch.png",
+  ),
+  Product(
+    name: "Leaf Rake",
+    manufacturer: "YardPro",
+    description:
+        "A lightweight leaf rake featuring a wide plastic head and durable handle. Great for gathering leaves and grass clippings without damaging your lawn.",
+    cost: 12,
+    image: "YardPro-Gardening_Tools-Leaf_Rake.png",
+  ),
+  Product(
+    name: "Wheelbarrow",
+    manufacturer: "YardPro",
+    description:
+        "A sturdy wheelbarrow with a rust-proof steel tray and a single pneumatic wheel. Ideal for transporting soil, plants, or tools around the yard.",
+    cost: 59,
+    image: "YardPro-Gardening_Tools-Wheelbarrow.png",
+  ),
+  Product(
+    name: "Bird Feeder",
+    manufacturer: "Bird Haven",
+    description:
+        "A hanging bird feeder with a clear plastic seed reservoir and metal perches. It attracts songbirds to the yard and has a roof to keep seeds dry.",
+    cost: 25,
+    image: "Bird_Haven-Decor-Bird_Feeder.png",
+  ),
+  Product(
+    name: "Liquid Plant Food",
+    manufacturer: "GroWell",
+    description:
+        "A 32-ounce bottle of liquid plant food concentrate. Dilute with water for weekly feeding to indoor and outdoor plants, providing fast-acting nutrients for growth.",
+    cost: 12,
+    image: "GroWell-Soil_Fertilizers-Liquid_Plant_Food.png",
+  ),
+  Product(
+    name: "Garden Hose",
+    manufacturer: "AquaFlow",
+    description:
+        "A 50-foot garden hose made from kink-resistant vinyl. It offers reliable water flow for irrigating lawns and garden beds.",
+    cost: 22,
+    image: "AquaFlow-Gardening_Tools-Garden_Hose.png",
+  ),
+  Product(
+    name: "Organic Compost Mix",
+    manufacturer: "TerraGreen",
+    description:
+        "A 30-pound bag of organic compost mix made from decomposed plant material. Ideal for enriching garden soil and improving moisture retention and soil structure.",
+    cost: 5,
+    image: "TerraGreen-Soil_Fertilizers-Organic_Compost_Mix.png",
+  ),
+  Product(
+    name: "Gardening Gloves",
+    manufacturer: "SafeGrip",
+    description:
+        "A pair of heavy-duty gardening gloves made from breathable, puncture-resistant fabric. They protect hands from thorns and provide a secure grip on tools.",
+    cost: 10,
+    image: "SafeGrip-Gardening_Tools-Gardening_Gloves.png",
+  ),
+  Product(
+    name: "Organic Basil Plant",
+    manufacturer: "Herbal Haven",
+    description:
+        "A live organic basil plant in a 4-inch pot, ready for harvesting aromatic leaves. Ideal for kitchen herb gardens and flavorful cooking.",
+    cost: 6,
+    image: "Herbal_Haven-Plants_Seeds-Organic_Basil_Plant.png",
+  ),
+  Product(
+    name: "Bird Bath",
+    manufacturer: "Bird Haven",
+    description:
+        "A decorative bird bath made of lightweight polyresin with an antique bronze finish. It provides a shallow basin for birds to drink and bathe, enhancing your garden's ambiance.",
+    cost: 45,
+    image: "Bird_Haven-Decor-Bird_Bath.png",
+  ),
+  Product(
+    name: "Solar Pathway Lights",
+    manufacturer: "SunGlow",
+    description:
+        "A 6-pack of solar-powered LED pathway lights with stainless steel stakes. They charge by day and automatically illuminate walkways or garden paths at night with a warm glow.",
+    cost: 30,
+    image: "SunGlow-Decor-Solar_Pathway_Lights.png",
+  ),
+  Product(
+    name: "Peat Moss Bale",
+    manufacturer: "SoilPro",
+    description:
+        "A compressed bale of sphagnum peat moss for soil amendment. Use it to improve soil aeration and water retention in garden beds and potted plants.",
+    cost: 14,
+    image: "SoilPro-Soil_Fertilizers-Peat_Moss_Bale.png",
+  ),
+  Product(
+    name: "Cordless Hedge Trimmer",
+    manufacturer: "GardenPro",
+    description:
+        "A battery-powered cordless hedge trimmer with a 22-inch blade. It easily cuts through shrubbery and hedges, offering convenient, cable-free operation.",
+    cost: 89,
+    image: "GardenPro-Gardening_Tools-Cordless_Hedge_Trimmer.png",
+  ),
+  Product(
+    name: "Strawberry Seedlings",
+    manufacturer: "BerryLand",
+    description:
+        "A pack of strawberry plant seedlings ready to transplant. They establish quickly and will yield sweet, juicy strawberries in the growing season.",
+    cost: 12,
+    image: "BerryLand-Plants_Seeds-Strawberry_Seedlings.png",
+  ),
+  Product(
+    name: "Wooden Barrel Planter",
+    manufacturer: "RusticGarden",
+    description:
+        "A rustic wooden barrel planter with reinforced metal bands. This half-barrel design is spacious and sturdy, perfect for planting small trees, shrubs, or creating a container garden centerpiece.",
+    cost: 35,
+    image: "RusticGarden-Planters_Pots-Wooden_Barrel_Planter.png",
+  ),
+  Product(
+    name: "Sunflower Seeds (Giant)",
+    manufacturer: "SunGrow Seeds",
+    description:
+        "A pack of giant sunflower seeds that grow towering sunflowers with large heads. Great for adding dramatic height and attracting birds to your garden.",
+    cost: 5,
+    image: "SunGrow_Seeds-Plants_Seeds-Sunflower_Seeds_Giant.png",
+  ),
+  Product(
+    name: "Glazed Ceramic Pot",
+    manufacturer: "PotteryLand",
+    description:
+        "A decorative glazed ceramic pot with a 10-inch diameter. The glossy finish adds a pop of color to indoor or outdoor decor, ideal for medium-sized houseplants.",
+    cost: 25,
+    image: "PotteryLand-Planters_Pots-Glazed_Ceramic_Pot.png",
+  ),
+  Product(
+    name: "Rose Fertilizer",
+    manufacturer: "BloomCraft",
+    description:
+        "A 4-pound bag of granular rose fertilizer formulated for abundant blooms. Provides essential nutrients and trace elements to promote healthy rose bushes.",
+    cost: 10,
+    image: "BloomCraft-Soil_Fertilizers-Rose_Fertilizer.png",
+  ),
+  Product(
+    name: "All-Purpose Garden Soil",
+    manufacturer: "EarthWorks",
+    description:
+        "A 40-pound bag of all-purpose garden soil for in-ground use. Improves existing soil by adding organic matter and is suitable for all types of garden plants.",
+    cost: 8,
+    image: "EarthWorks-Soil_Fertilizers-All_Purpose_Garden_Soil.png",
+  ),
+  Product(
+    name: "Orchid (Phalaenopsis)",
+    manufacturer: "TropicBloom",
+    description:
+        "A potted Phalaenopsis orchid with elegant blooms. It adds a touch of exotic beauty indoors and will rebloom with proper care.",
+    cost: 20,
+    image: "TropicBloom-Plants_Seeds-Orchid_Phalaenopsis.png",
+  ),
+  Product(
+    name: "Terra Cotta Pot (12 inch)",
+    manufacturer: "ClayCraft",
+    description:
+        "A medium 12-inch diameter terra cotta pot with a drainage hole. Ideal for housing small trees or plants, its porous clay allows for healthy root breathing.",
+    cost: 15,
+    image: "ClayCraft-Planters_Pots-Terra_Cotta_Pot_12_inch.png",
+  ),
+  Product(
+    name: "Jasmine Plant",
+    manufacturer: "EverBloom Nursery",
+    description:
+        "A potted jasmine plant with delicate white flowers and glossy green leaves. Known for its sweet fragrance, it thrives in gardens or as an indoor houseplant.",
+    cost: 25,
+    image: "EverBloom_Nursery-Plants_Seeds-Jasmine_Plant.png",
+  ),
+  Product(
+    name: "Watering Can",
+    manufacturer: "AquaFlow",
+    description:
+        "A 2-gallon metal watering can with a removable rose sprinkler head. Provides a gentle shower for watering garden plants and seedlings.",
+    cost: 15,
+    image: "AquaFlow-Gardening_Tools-Watering_Can.png",
+  ),
+  Product(
+    name: "All-Purpose Plant Fertilizer",
+    manufacturer: "NutriGrow",
+    description:
+        "A 5-pound bag of balanced, all-purpose plant fertilizer (10-10-10 formula). It slowly releases nutrients to support healthy growth in flowers, vegetables, and shrubs.",
+    cost: 18,
+    image: "NutriGrow-Soil_Fertilizers-All_Purpose_Plant_Fertilizer.png",
+  ),
+  Product(
+    name: "Bone Meal Fertilizer",
+    manufacturer: "EcoGro",
+    description:
+        "A 3-pound bag of organic bone meal fertilizer that is an excellent source of phosphorus and calcium. It supports root development and flowering in plants.",
+    cost: 8,
+    image: "EcoGro-Soil_Fertilizers-Bone_Meal_Fertilizer.png",
+  ),
+  Product(
+    name: "Garden Tool Set",
+    manufacturer: "HandyGardener",
+    description:
+        "A 5-piece garden tool set including a trowel, cultivator, transplanter, weeder, and fork. It features ergonomic handles and is perfect for beginners or small gardening tasks.",
+    cost: 30,
+    image: "HandyGardener-Gardening_Tools-Garden_Tool_Set.png",
+  ),
+  Product(
+    name: "Bypass Loppers",
+    manufacturer: "TrimFast",
+    description:
+        "A set of long-handled bypass loppers with high-carbon steel blades. Designed to cut thick branches, they provide leverage for pruning hard-to-reach limbs.",
+    cost: 35,
+    image: "TrimFast-Gardening_Tools-Bypass_Loppers.png",
+  ),
+];

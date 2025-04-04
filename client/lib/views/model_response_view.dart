@@ -7,7 +7,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 import '../styles.dart';
-import 'view_model.dart';
+import '../view_models/product_data.dart';
+import '../view_models/view_model.dart';
 
 final _random = Random();
 
@@ -20,6 +21,10 @@ class ModelResponseView extends StatefulWidget {
   State<ModelResponseView> createState() => _ModelResponseViewState();
 }
 
+// Wow, this whole things is just a mess. In order to make the UI more-demoable,
+// but not risk redeploying the server, there are a lot of weird hacks to turn
+// the LLM response into nice UI. In reality, this is achievable without the hacks
+// by just returning structured data from the LLM, which is trivial with Genkit.
 class _ModelResponseViewState extends State<ModelResponseView> {
   late ModelResponseText parsedMessage;
   final List<Widget> recommendationWidgets = [];
@@ -54,16 +59,17 @@ class _ModelResponseViewState extends State<ModelResponseView> {
       // TODO(ewindmill): Remove before deploying.
       //  This adds an additional widget some amount of the time, which in reality
       // will happen rarely and is based on the the LLMs response.
-      final replace =
-          _random.nextInt(100) < 50 &&
-          !parsedMessage.hasReminder &&
-          recommendationWidgets.length >= 2;
+      final replace = _random.nextInt(100) < 50 && !parsedMessage.hasReminder;
       if (replace) {
-        recommendationWidgets[1] = Padding(
-          padding: const EdgeInsets.only(left: AppLayout.defaultPadding),
-          child: _RecommendationWidget(
-            reminderRecommendation,
-            shouldShowReminder: true,
+        final index = _random.nextInt(recommendationWidgets.length);
+        recommendationWidgets.insert(
+          index,
+          Padding(
+            padding: const EdgeInsets.only(left: AppLayout.defaultPadding),
+            child: _RecommendationWidget(
+              reminderRecommendation,
+              shouldShowReminder: true,
+            ),
           ),
         );
       }

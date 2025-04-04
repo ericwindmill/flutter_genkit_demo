@@ -7,8 +7,8 @@ import 'package:image/image.dart' as img;
 import '../greenthumb/service.dart';
 import '../platform_util.dart';
 import '../styles.dart';
+import '../view_models/view_model.dart';
 import '../widgets/gt_button.dart';
-import 'view_model.dart';
 
 class InterruptImagePicker extends StatefulWidget {
   InterruptImagePicker({
@@ -63,19 +63,31 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
               padding: const EdgeInsets.symmetric(
                 horizontal: AppLayout.extraLargePadding,
               ),
-              child: GtButton(
-                style:
-                    _currentImageBytes == null
-                        ? GtButtonStyle.elevated
-                        : GtButtonStyle.outlined,
-                onPressed:
-                    _isCompressing || widget.onResume == null
-                        ? null
-                        : () => _getPicture(context),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [const Text('Take picture')],
-                ),
+              child: Row(
+                children: [
+                  Spacer(),
+                  GtButton(
+                    style: GtButtonStyle.outlined,
+                    onPressed:
+                        _isCompressing || widget.onResume == null
+                            ? null
+                            : () => _skipPhoto(),
+                    child: const Text('Skip'),
+                  ),
+                  SizedBox(width: 10),
+                  GtButton(
+                    style:
+                        _currentImageBytes == null
+                            ? GtButtonStyle.elevated
+                            : GtButtonStyle.outlined,
+                    onPressed:
+                        _isCompressing || widget.onResume == null
+                            ? null
+                            : () => _getPicture(context),
+                    child: const Text('Select picture'),
+                  ),
+                  Spacer(),
+                ],
               ),
             ),
           ),
@@ -98,13 +110,32 @@ class _InterruptImagePickerState extends State<InterruptImagePicker> {
         if (_currentImageBytes != null)
           SizedBox(height: AppLayout.defaultPadding),
         if (_currentImageBytes != null)
-          GtButton(
-            style: GtButtonStyle.elevated,
-            onPressed: widget.onResume == null ? null : _submit,
-            child: const Text('Submit'),
+          Row(
+            children: [
+              Spacer(),
+              GtButton(
+                style: GtButtonStyle.outlined,
+                onPressed:
+                    _isCompressing || widget.onResume == null
+                        ? null
+                        : () => _getPicture(context),
+                child: const Text('Retake'),
+              ),
+              SizedBox(width: 10),
+              GtButton(
+                style: GtButtonStyle.elevated,
+                onPressed: widget.onResume == null ? null : _submit,
+                child: const Text('Submit'),
+              ),
+              Spacer(),
+            ],
           ),
       ],
     );
+  }
+
+  void _skipPhoto() {
+    debugPrint('skipping');
   }
 
   void _getPicture(BuildContext context) async {

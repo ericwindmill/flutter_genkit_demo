@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_fix_warehouse/greenthumb/data.dart';
-import 'package:flutter_fix_warehouse/views/view_model.dart';
+import 'package:flutter_fix_warehouse/view_models/view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import '../platform_util.dart';
-import '../views/view_model.dart';
+import '../view_models/view_model.dart';
 import 'data.dart';
 
 typedef ToolRequestCallback = void Function(String prompt);

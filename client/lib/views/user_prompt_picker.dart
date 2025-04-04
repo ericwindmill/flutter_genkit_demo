@@ -1,10 +1,12 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fix_warehouse/main.dart';
 
 import '../greenthumb/service.dart';
 import '../styles.dart';
-import 'view_model.dart';
+import '../view_models/view_model.dart';
 
 class UserPromptPicker extends StatelessWidget {
   UserPromptPicker({this.onRequest, required Message message, super.key})
@@ -23,28 +25,38 @@ class UserPromptPicker extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: padding),
+      padding: EdgeInsets.only(left: max(padding - 64, 0), right: padding),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Spacer(flex: 1),
-          Text(
-            'Welcome to',
-            style: AppTextStyles.body,
-            textAlign: TextAlign.center,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16),
+          Container(
+            margin: EdgeInsets.only(bottom: 0, top: 20),
             child: Text(
-              'GreenThumb!',
-              style: AppTextStyles.heading,
+              'Welcome to',
+              style: AppTextStyles.body,
               textAlign: TextAlign.center,
             ),
           ),
-          Text(
-            'GreenThumb provides gardening advice based on your unique circumstance.',
-            style: AppTextStyles.body,
-            textAlign: TextAlign.center,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16, top: 0),
+            child: Text(
+              'GreenThumb!',
+              style: AppTextStyles.heading.copyWith(
+                color: AppColors.primaryDark,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: 400,
+              child: Text(
+                'GreenThumb provides gardening advice based on your unique circumstance.',
+                style: AppTextStyles.body,
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
           SizedBox(height: AppLayout.largePadding),
           Padding(

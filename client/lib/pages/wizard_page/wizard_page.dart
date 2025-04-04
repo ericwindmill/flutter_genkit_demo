@@ -3,12 +3,12 @@ import 'package:flutter_fix_warehouse/main.dart';
 
 import '../../greenthumb/service.dart';
 import '../../styles.dart';
+import '../../view_models/view_model.dart';
 import '../../views/interrupt_choice_picker.dart';
 import '../../views/interrupt_image_picker.dart';
 import '../../views/interrupt_range_value_picker.dart';
 import '../../views/model_response_view.dart';
 import '../../views/user_prompt_picker.dart';
-import '../../views/view_model.dart';
 import '../../widgets/app_navigation_bar.dart';
 import '../../widgets/sparkle_leaf.dart';
 
